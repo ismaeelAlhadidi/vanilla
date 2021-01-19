@@ -1,0 +1,288 @@
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDirection : ltr;
+$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBorderRadius: 0.3rem;
+$defaultPlaceHolderColor: #e6e6e6;
+$defaultFontFamily: normal;
+
+$defaultTextColor: #000;
+$defaultLineHeight: 1;
+$pageMainColor: #fff;
+
+
+$subColor: #e6e6e6;
+$styleColor: rgb(148, 240, 148);
+$defaultFontSize: 1rem;
+
+$pageReverseDirection: rtl;
+$nauralAlign: left;
+$nauralReverseAlign: right;
+
+@if $pageDirection == rtl {
+    $pageReverseDirection: ltr;
+    $nauralAlign: right;
+    $nauralReverseAlign: left;
+}
+
+%default-button {
+    font-size: $defaultFontSize;
+    padding: 0.5 * $defaultFontSize $defaultFontSize;
+    margin: 0.5 * $defaultFontSize;
+    background-color: $pageDefaultButtonsBackgroundColor;
+    color: $pageDefaultButtonsTextColor;
+    border: 0.05 * $defaultFontSize solid $pageDefaultButtonsTextColor; 
+    border-radius: $pageDefaultButtonsBorderRadius;
+    user-select: none;
+    cursor: pointer;
+}
+%default-button:hover {
+    color: red;
+    border-color: red;
+}
+%no-select {
+    user-select: none;
+}
+.vanilla-cropper {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $PopUpTemplateBackColor;
+    $defaultFontSize: 1rem;
+    * {
+        box-sizing: border-box;
+        color: $defaultTextColor;
+        border: none;
+        outline: none;
+        line-height: $defaultLineHeight !important;
+        font-size: $defaultFontSize;
+        font-family: $defaultFontFamily;
+    }
+    & > div {
+        width: 100%;
+        height: 80%;
+        background: $pageMainColor;
+        position: relative;
+
+        .main-image-outer-container {
+            width: 100%;
+            height: 100%;
+            padding: 0.5 * $defaultFontSize;
+            .main-image-inner-container {
+                width: 100%;
+                height: 80%;
+                position: relative;
+                canvas {
+                    width: 100%;
+                    height: 100%;
+                    background-color: transparent;
+                }
+                .selector-area {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 2;
+                    background: transparent;
+                    background-size: auto auto;
+                    .selector-area-placeholder {
+                        background-color: rgba(0, 0, 0, 0);
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .box {
+                        position: absolute;
+                        z-index: 1;
+                        background: transparent;
+                        border: 1.7px solid #1b1a1a;
+                        box-shadow: 
+                            inset 0 -3em 3em rgba(0,0,0,0.1),
+                            0 0  0 2px rgba(255,255,255, 0.6),
+                            0.3em 0.3em 1em rgba(0,0,0,0.3);
+                        cursor: move;
+                        .resize-area {
+                            position: absolute;
+                            background-color: transparent;
+                        }
+                        .resize-area:first-of-type {
+                            top: 0;
+                            left: 0;
+                            cursor: nw-resize;
+                        }
+                        .resize-area:nth-of-type(2) {
+                            top: 0;
+                            right: 0;
+                            cursor: ne-resize;
+                        }
+                        .resize-area:nth-of-type(3) {
+                            bottom: 0;
+                            right: 0;
+                            cursor: nw-resize;
+                        }
+                        .resize-area:last-of-type {
+                            bottom: 0;
+                            left: 0;
+                            cursor: ne-resize;
+                        }
+                    }
+                }
+            }
+            .main-image-buttons {
+                height: 20%;
+                padding: 0.5 * $defaultFontSize;
+                direction: $pageReverseDirection;
+                border-top: solid 0.05 * $defaultFontSize $pageDefaultButtonsTextColor;
+                display: flex;
+                align-items: center;
+                button {
+                    @extend %default-button;
+                }
+            }
+        }
+        .new-image-outer-container {
+            position: relative;
+            display: none;
+            width: 30%;
+            height: 100%;
+            float: $nauralAlign;
+            padding: 0.5 * $defaultFontSize;
+            border-#{$nauralReverseAlign}: solid 0.05rem rgba(1, 1, 1, 0.568);
+            img {
+                width: 100%;
+                margin: 0.5 * $defaultFontSize 0px;
+            }
+            .new-image-placeholder {
+                width: 100%;
+                margin: 0.5 * $defaultFontSize 0px;
+            }
+            .new-image-buttons {
+                bottom: 3 * $defaultFontSize;
+                position: absolute;
+                padding: 0.5 * $defaultFontSize;
+                direction: $pageReverseDirection;
+                display: flex;
+                align-items: center;
+                button {
+                    @extend %default-button;
+                }
+            }
+        }
+        .vanilla-cropper-placeholder {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background-color: $defaultPlaceHolderColor;
+            .vanilla-cropper-progress {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @extend %no-select;
+                text-align: center;
+            }
+        }
+    }
+}
+@media(min-width: 768px) {
+    %absolute-center {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .vanilla-cropper {
+        text-align: center;
+        & > div {
+            width: 80%;
+            height: 70%;
+            @extend %absolute-center;
+            .main-image-outer-container {
+                width: 70%;
+                float: $nauralReverseAlign;
+                .main-image-inner-container {
+                    height: 100%;
+                }
+                .main-image-buttons {
+                    display: none;
+                }
+            }
+            .new-image-outer-container {
+                display: block;
+            }
+        }
+    }
+}
+@media(min-width: 1200px) {
+    .vanilla-cropper {
+        & > div {
+            width: 940px;
+        }
+    }
+}
+
+.loader-dual-ring {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+.loader-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 34px;
+    height: 34px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loader-dual-ring 1.2s linear infinite;
+}
+@keyframes loader-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.loader-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: loader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.loader-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.loader-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.loader-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes loader-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
