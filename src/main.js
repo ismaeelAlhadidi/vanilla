@@ -1,9 +1,12 @@
 //import VanillaCropper from "./VanillaCropper/main";
+// import VanillaPopup from "./VanillaPopup/main";
+import VanillaPopup from "./VanillaPopup/main";
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
 file.onchange = function () {
     let fileReader = new FileReader();
-    fileReader.readAsDataURL(file.files[0])
+    if(! file.files[0]) return;
+    fileReader.readAsDataURL(file.files[0]);
     fileReader.onload = function () {
         let image = new Image();
         image.onload = function () {
@@ -20,6 +23,7 @@ file.onchange = function () {
                 import("./VanillaCropper/main").then( (module) => {
                     vanillaCropper = new module.default();
                     vanillaCropper.start(image, 100, 70, saveHandler, exitHandler, errorCallBack);
+                   
                 });
                 return;
             }
@@ -28,14 +32,22 @@ file.onchange = function () {
         image.src = fileReader.result;
     };
 }
-/*
-let image = new Image();
-var vanillaCropper = new VanillaCropper();
-            vanillaCropper.start(image, 100, 70, function () {
-                console.log("image saved");
-            }, function() {
-                console.log("exit from cropper");
-            });
-image.src = "./images/118.jpg";
-*/
+//let vanillaPopup = new VanillaPopup();
+//vanillaPopup.alert("this is title", "this is message", "button text").then().catch();
 
+var vanillaPopup = new VanillaPopup();
+
+vanillaPopup.alert("", "please crop the image", "ok").then(()=>{
+    console.log("hi from html");
+});
+
+/*
+var i = 0;
+window.onclick = function () {
+    console.log("window clicked");
+    vanillaPopup.confirm("confirm title" + i, "confirm message", "YES", "NO").then( ( result ) => {
+        console.log(result);
+        i++;
+    });
+};
+*/

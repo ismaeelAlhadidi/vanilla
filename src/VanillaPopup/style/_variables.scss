@@ -1,0 +1,45 @@
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDirection : ltr;
+$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBorderRadius: 0.3rem;
+$defaultPlaceHolderColor: #e6e6e6;
+$defaultFontFamily: normal;
+
+$defaultTextColor: #000;
+$defaultLineHeight: 1;
+$pageMainColor: #fff;
+
+
+$subColor: #e6e6e6;
+$styleColor: rgb(148, 240, 148);
+$defaultFontSize: 1rem;
+
+$pageReverseDirection: rtl;
+$nauralAlign: left;
+$nauralReverseAlign: right;
+
+@if $pageDirection == rtl {
+    $pageReverseDirection: ltr;
+    $nauralAlign: right;
+    $nauralReverseAlign: left;
+}
+
+%default-button {
+    font-size: $defaultFontSize;
+    padding: 0.5 * $defaultFontSize $defaultFontSize;
+    margin: 0.5 * $defaultFontSize;
+    background-color: $pageDefaultButtonsBackgroundColor;
+    color: $pageDefaultButtonsTextColor;
+    border: 0.05 * $defaultFontSize solid $pageDefaultButtonsTextColor; 
+    border-radius: $pageDefaultButtonsBorderRadius;
+    user-select: none;
+    cursor: pointer;
+}
+%default-button:hover {
+    color: red;
+    border-color: red;
+}
+%no-select {
+    user-select: none;
+}

@@ -1,0 +1,108 @@
+@import "_variables.scss";
+
+$pupUpHeaderHeight: 1.9*1rem;
+$pupUpContentPadding: 10px;
+$popUpBorderRadius: 0.2rem;
+$pupUpFooterPadding: 3px;
+$popUpDefaultBorder: 0.05rem solid #d2fda2;
+$popUpBigScreenWidth: 400px;
+$popUpSmallScreenWidth: 85%;
+$popUpSmallScreenLeftPostion: 7.5%;
+
+.vanilla-center-pop-up {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $PopUpTemplateBackColor;
+    $defaultFontSize: 1rem;
+    * {
+        direction: $pageDirection;
+        text-align: $nauralAlign;
+        box-sizing: border-box;
+        color: $defaultTextColor;
+        border: none;
+        outline: none;
+        line-height: $defaultLineHeight;
+        font-size: $defaultFontSize;
+        font-family: $defaultFontFamily;
+    }
+    & > div {
+        width: $popUpBigScreenWidth;
+        background: $pageMainColor;
+        position: relative;
+        border-radius: $popUpBorderRadius;
+        overflow: hidden;
+        border: $popUpDefaultBorder;
+
+        & > * {
+            width: 100%;
+        }
+        & > header {
+            @extend %no-select;
+            background: $pageDefaultButtonsBackgroundColor;
+            height: $pupUpHeaderHeight;
+            div {
+                height: 100%;
+                text-align: center;
+                span {
+                    display: inline-block;
+                    margin: $pupUpHeaderHeight/2-$defaultFontSize/2;
+                    text-align: center;
+                    color: $PopUpTemplateBackColor;
+                }
+            }
+        }
+        & > main {
+            background: $pageMainColor;
+            padding: $pupUpContentPadding;
+            p {
+                margin: 0px;
+                text-align: center;
+                padding: $pupUpContentPadding/2 $pupUpContentPadding $pupUpContentPadding/4;
+                line-height: $defaultLineHeight*1.5;
+            }
+        }
+        & > footer {
+            @extend %no-select;
+            background: $pageMainColor;
+            padding: $pupUpFooterPadding;
+            text-align: $nauralReverseAlign;
+            button {
+                @extend %default-button;
+                font-size: $defaultFontSize*0.7;
+                border: $popUpDefaultBorder;
+                min-width: $popUpBigScreenWidth/5;
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media(min-width: 460px) {
+    %absolute-like-center {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+    }
+    .vanilla-center-pop-up {
+        & > div {
+            @extend %absolute-like-center;
+        }
+    }
+}
+
+@media(max-width: 460px) {
+    %vertical-like-center {
+        top: 50%;
+        transform: translateY(-55%);
+    }
+    .vanilla-center-pop-up {
+        & > div {
+            @extend %vertical-like-center;
+            width: $popUpSmallScreenWidth;
+            left: $popUpSmallScreenLeftPostion;
+        }
+    }
+}

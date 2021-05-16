@@ -1,0 +1,15 @@
+@import "main.scss";
+
+.vanilla-confirm {
+    & > div {
+
+        & > footer {
+            direction: $pageReverseDirection;
+
+            button:last-of-type {
+
+                background-color: #dedede;
+            }
+        }
+    }
+}
