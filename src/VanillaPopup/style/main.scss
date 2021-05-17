@@ -10,6 +10,7 @@ $popUpSmallScreenWidth: 85%;
 $popUpSmallScreenLeftPostion: 7.5%;
 
 .vanilla-center-pop-up {
+    @extend %vanilla-reset;
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -17,17 +18,6 @@ $popUpSmallScreenLeftPostion: 7.5%;
     left: 0;
     background-color: $PopUpTemplateBackColor;
     $defaultFontSize: 1rem;
-    * {
-        direction: $pageDirection;
-        text-align: $nauralAlign;
-        box-sizing: border-box;
-        color: $defaultTextColor;
-        border: none;
-        outline: none;
-        line-height: $defaultLineHeight;
-        font-size: $defaultFontSize;
-        font-family: $defaultFontFamily;
-    }
     & > div {
         width: $popUpBigScreenWidth;
         background: $pageMainColor;

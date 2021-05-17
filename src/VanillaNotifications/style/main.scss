@@ -1,0 +1,43 @@
+@import "./variables";
+
+$notificationsTemplateMaxWidth: 400px;
+$notificationsTemplateMaxHeigth: 500px;
+$notificationsTemplateTop: 70px;
+
+$notificationsTemplateSmallDeviceTop: 60px;
+$notificationsTemplateSmallDeviceBottom: 10%;
+
+$notificationsTemplatePadding: 0;
+
+$notificationsTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+
+.vanilla-notifications {
+    @extend %vanilla-reset;
+    @extend %no-select;
+    width: $notificationsTemplateMaxWidth;
+    height: $notificationsTemplateMaxHeigth;
+    background-color: $pageMainColor;
+    position: fixed;
+    top: $notificationsTemplateTop;
+    padding: $notificationsTemplatePadding;
+    box-shadow: $notificationsTemplateBoxShadow;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    & > header {
+        width: 100%;
+        padding: $defaultFontSize*0.75;
+        border-bottom: $defaultBorder;
+    }
+}
+
+@media (max-width: 500px) {
+    .vanilla-notifications {
+        top: $notificationsTemplateSmallDeviceTop;
+        width: 90%;
+        left: 5%;
+        right: 5%;
+        height: unset;
+        bottom: $notificationsTemplateSmallDeviceBottom;
+    }
+}

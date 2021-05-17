@@ -1,6 +1,7 @@
 //import VanillaCropper from "./VanillaCropper/main";
 // import VanillaPopup from "./VanillaPopup/main";
 import VanillaPopup from "./VanillaPopup/main";
+import VanillaNotifications from "./VanillaNotifications/main";
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
 file.onchange = function () {
@@ -37,11 +38,23 @@ file.onchange = function () {
 
 var vanillaPopup = new VanillaPopup();
 
+var vanillaNotifications = new VanillaNotifications();
+
+for(let i = 0; i < 20; i++) {
+    vanillaNotifications.push(
+        i,
+        "mohammad ahmmad al-hadidi commented today on your new last bad post you publish it before three years",
+        "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+        "34 minutes ago",
+        !(i%3 ==  0),
+        () => console.log("hi from notification " + i)
+    );
+}
+
+/*
 vanillaPopup.alert("", "please crop the image", "ok").then(()=>{
     console.log("hi from html");
 });
-
-/*
 var i = 0;
 window.onclick = function () {
     console.log("window clicked");

@@ -1,20 +1,4 @@
-$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
 $pageDirection : ltr;
-$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
-$pageDefaultButtonsTextColor: rgba(1, 1, 1, 0.568);
-$pageDefaultButtonsBorderRadius: 0.3rem;
-$defaultPlaceHolderColor: #e6e6e6;
-$defaultFontFamily: normal;
-
-$defaultTextColor: #000;
-$defaultLineHeight: 1;
-$pageMainColor: #fff;
-
-
-$subColor: #e6e6e6;
-$styleColor: rgb(148, 240, 148);
-$defaultFontSize: 1rem;
-
 $pageReverseDirection: rtl;
 $nauralAlign: left;
 $nauralReverseAlign: right;
@@ -24,6 +8,24 @@ $nauralReverseAlign: right;
     $nauralAlign: right;
     $nauralReverseAlign: left;
 }
+
+/* font : */
+$defaultFontFamily: normal;
+$defaultLineHeight: 1;
+$defaultFontSize: 1rem;
+
+/* colors : */
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: #01010191;
+$defaultPlaceHolderColor: #e6e6e6;
+$pageMainColor: #fff;
+$subColor: #e6e6e6;
+$styleColor: rgb(148, 240, 148);
+$defaultTextColor: #000;
+$defaultWiteTextColor: #868181;
+
+$pageDefaultButtonsBorderRadius: 0.3rem;
 
 %default-button {
     font-size: $defaultFontSize;
@@ -43,7 +45,6 @@ $nauralReverseAlign: right;
 %no-select {
     user-select: none;
 }
-
 %vanilla-reset {
     direction: $pageDirection;
     text-align: $nauralAlign;
@@ -55,7 +56,6 @@ $nauralReverseAlign: right;
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
 }
-
 %vanilla-reset * {
     direction: $pageDirection;
     text-align: $nauralAlign;
@@ -67,3 +67,5 @@ $nauralReverseAlign: right;
     font-size: $defaultFontSize;
     font-family: $defaultFontFamily;
 }
+
+$defaultBorder: 1px solid #e9e9e9;
