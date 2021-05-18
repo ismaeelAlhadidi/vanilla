@@ -2,6 +2,7 @@
 // import VanillaPopup from "./VanillaPopup/main";
 import VanillaPopup from "./VanillaPopup/main";
 import VanillaNotifications from "./VanillaNotifications/main";
+import VanillaSmallGallery from "./VanillaSmallGallery/main";
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
 file.onchange = function () {
@@ -40,12 +41,27 @@ var vanillaPopup = new VanillaPopup();
 
 var vanillaNotifications = new VanillaNotifications();
 
-vanillaNotifications.open();
+var vanillaSmallGallery = new VanillaSmallGallery(340, 440/*, [
+    "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+    "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
+    "https://homepages.cae.wisc.edu/~ece533/images/boat.png"
+],[
+    "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4"
+]*/);
+document.body.appendChild(vanillaSmallGallery);
+
+vanillaSmallGallery.addImage("https://homepages.cae.wisc.edu/~ece533/images/airplane.png");
+vanillaSmallGallery.addImage("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png");
+vanillaSmallGallery.addImage("https://homepages.cae.wisc.edu/~ece533/images/boat.png");
+vanillaSmallGallery.addVideo("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4");
+
+
+//vanillaNotifications.open();
 
 // vanillaNotifications.addPlaceHolders();
 
 //vanillaNotifications.removePlaceHolders();
-
+/*
 for(let i = 0; i < 20; i++) {
     vanillaNotifications.push(
         i,
@@ -55,7 +71,7 @@ for(let i = 0; i < 20; i++) {
         !(i%3 ==  0),
         () => console.log("hi from notification " + i)
     );
-}
+}*/
 //vanillaNotifications.removePlaceHolders();
 
 /*

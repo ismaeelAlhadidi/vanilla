@@ -1,0 +1,241 @@
+$pageDirection : ltr;
+
+$pageReverseDirection: rtl;
+$nauralAlign: left;
+$nauralReverseAlign: right;
+@if $pageDirection == rtl {
+    $pageReverseDirection: ltr;
+    $nauralAlign: right;
+    $nauralReverseAlign: left;
+}
+
+/* font : */
+$defaultFontFamily: normal;
+$defaultLineHeight: 1;
+$defaultFontSize: 1rem;
+
+/* colors : */
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: #01010191;
+$defaultPlaceHolderColor: #e6e6e6;
+$pageMainColor: #fff;
+$subColor: #e6e6e6;
+$styleColor: rgb(148, 240, 148);
+$defaultTextColor: #000;
+$defaultWiteTextColor: #868181;
+
+$pageDefaultButtonsBorderRadius: 0.3rem;
+
+%default-button {
+    font-size: $defaultFontSize;
+    padding: 0.5 * $defaultFontSize $defaultFontSize;
+    margin: 0.5 * $defaultFontSize;
+    background-color: $pageDefaultButtonsBackgroundColor;
+    color: $pageDefaultButtonsTextColor;
+    border: 0.05 * $defaultFontSize solid $pageDefaultButtonsTextColor; 
+    border-radius: $pageDefaultButtonsBorderRadius;
+    user-select: none;
+    cursor: pointer;
+}
+%default-button:hover {
+    color: red;
+    border-color: red;
+}
+%no-select {
+    user-select: none;
+}
+%vanilla-reset {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+}
+%vanilla-reset * {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+}
+
+$defaultBorder: 1px solid #e9e9e9;
+
+$defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+
+.vanilla-small-gallery {
+    @extend %no-select;
+    background-color: $pageMainColor;
+    box-shadow: $defaultTemplateBoxShadow;
+    position: relative;
+    & > div {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        & > img {
+            width: 100%;
+            height: 100%;
+        }
+        & > video {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    & > nav {
+        display: none;
+        bottom: 3%;
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        text-align: center;
+        & > span {
+            display: inline-block;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            margin: 0 5px 0;
+            background-color: $pageMainColor;
+            border: $defaultBorder;
+            cursor: pointer;
+        }
+        & > .vanilla-small-gallery-selected-nav-span {
+            background-color: #000;
+        }
+    }
+    & > section {
+        display: none;
+        width: 13%;
+        & > svg {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            cursor: pointer;
+            & > path {
+                fill: currentColor;
+                color: $pageMainColor;
+                border: $defaultBorder;
+            }
+        }
+    }
+    & > section:first-of-type {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    & > section:last-of-type {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .vanilla-small-gallery-placeholder {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        background-color: $defaultPlaceHolderColor;
+        .vanilla-small-gallery-progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            @extend %no-select;
+            text-align: center;
+        }
+    }
+    .vanilla-small-gallery-empty-message {
+        top: 0;
+        left: 0;
+        z-index: 2;
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        span {
+            text-align: center;
+            width: 80%;
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+.loader-dual-ring {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+.loader-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 34px;
+    height: 34px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loader-dual-ring 1.2s linear infinite;
+}
+@keyframes loader-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.loader-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: loader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.loader-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.loader-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.loader-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes loader-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
