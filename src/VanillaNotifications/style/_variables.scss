@@ -1,8 +1,8 @@
 $pageDirection : ltr;
+
 $pageReverseDirection: rtl;
 $nauralAlign: left;
 $nauralReverseAlign: right;
-
 @if $pageDirection == rtl {
     $pageReverseDirection: ltr;
     $nauralAlign: right;

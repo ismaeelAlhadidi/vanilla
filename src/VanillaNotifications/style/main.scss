@@ -4,12 +4,11 @@ $notificationsTemplateMaxWidth: 400px;
 $notificationsTemplateMaxHeigth: 500px;
 $notificationsTemplateTop: 70px;
 
-$notificationsTemplateSmallDeviceTop: 60px;
-$notificationsTemplateSmallDeviceBottom: 10%;
 
 $notificationsTemplatePadding: 0;
 
 $notificationsTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+
 
 .vanilla-notifications {
     @extend %vanilla-reset;
@@ -23,21 +22,50 @@ $notificationsTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
     box-shadow: $notificationsTemplateBoxShadow;
     overflow-x: hidden;
     overflow-y: auto;
-
     & > header {
         width: 100%;
         padding: $defaultFontSize*0.75;
         border-bottom: $defaultBorder;
+        & > .exit-icon {
+            display: none;
+            width: $defaultFontSize*0.75*2;
+            height: $defaultFontSize*0.75*2;
+            position: absolute;
+            top: $defaultFontSize*0.5;
+            #{$nauralReverseAlign}: $defaultFontSize*0.75;
+            cursor: pointer;
+            path {
+                color: $defaultWiteTextColor;
+            }
+        }
+    }
+
+    & > main > .empty-message {
+        width: 100%;
+        height: 100%;
+        span {
+            text-align: center;
+            width: 80%;
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 }
 
 @media (max-width: 500px) {
     .vanilla-notifications {
-        top: $notificationsTemplateSmallDeviceTop;
-        width: 90%;
-        left: 5%;
-        right: 5%;
-        height: unset;
-        bottom: $notificationsTemplateSmallDeviceBottom;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        
+        .exit-icon {
+            display: block !important;
+        }
     }
 }

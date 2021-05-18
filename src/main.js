@@ -40,6 +40,12 @@ var vanillaPopup = new VanillaPopup();
 
 var vanillaNotifications = new VanillaNotifications();
 
+vanillaNotifications.open();
+
+// vanillaNotifications.addPlaceHolders();
+
+//vanillaNotifications.removePlaceHolders();
+
 for(let i = 0; i < 20; i++) {
     vanillaNotifications.push(
         i,
@@ -50,6 +56,11 @@ for(let i = 0; i < 20; i++) {
         () => console.log("hi from notification " + i)
     );
 }
+//vanillaNotifications.removePlaceHolders();
+
+/*
+
+*/
 
 /*
 vanillaPopup.alert("", "please crop the image", "ok").then(()=>{
