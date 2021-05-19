@@ -140,11 +140,13 @@ export default class VanillaNotifications extends HTMLElement {
             document.body.appendChild(this);
         }
         this.style = "display: block !important;";
+        this.isOpend = true;
     }
 
     close() {
         this.style = "display: none !important;";
         this.removePlaceHolders();
+        this.isOpend = false;
     }
 
     pushAll(data) {

@@ -4,6 +4,9 @@ import VanillaPopup from "./VanillaPopup/main";
 import VanillaNotifications from "./VanillaNotifications/main";
 import VanillaSmallGallery from "./VanillaSmallGallery/main";
 import VanillaAddPostTemplate from "./VanillaAddPostTemplate/main";
+import VanillaHeader from "./VanillaHeader/main";
+import VanillaList from "./VanillaList/main";
+
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
 file.onchange = function () {
@@ -42,6 +45,26 @@ var vanillaPopup = new VanillaPopup();
 
 var vanillaNotifications = new VanillaNotifications();
 
+/*
+var vanillaList = new VanillaList(0, "list",[
+    {text: '1', url: 'null'},
+    {text: '2', url: 'null'},
+    {text: '3', url: 'null'},
+    {text: '4', url: 'null'},
+    {text: '5', url: 'null'}
+]);
+vanillaList.add(1, 'null');
+vanillaList.add(2, 'null');
+vanillaList.add(3, 'null');
+vanillaList.add(4, 'null');
+vanillaList.add(5, 'null');
+vanillaList.add(1, 'null');
+vanillaList.add(2, 'null');
+vanillaList.add(3, 'null');
+vanillaList.add(4, 'null');
+vanillaList.add(5, 'null');
+*/
+
 /*var vanillaSmallGallery = new VanillaSmallGallery(340, 440, [
     "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
     "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
@@ -56,13 +79,26 @@ var vanillaNotifications = new VanillaNotifications();
 //vanillaSmallGallery.addImage("https://homepages.cae.wisc.edu/~ece533/images/boat.png");
 //vanillaSmallGallery.addVideo("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4");
 
-var vanillaAddPostTemplate = new VanillaAddPostTemplate(5);
+// var vanillaAddPostTemplate = new VanillaAddPostTemplate(5);
 
-vanillaAddPostTemplate.open().then((images, videos)=> {
-    console.log("post");
-}).catch(() => {
-    console.log("exit");
-});
+let vanillaHeader = document.getElementById('VanillaHeader').parentElement;
+
+vanillaHeader.setAttribute('categories', JSON.stringify([
+    {text: '1', url: 'null'},
+    {text: '2', url: 'null'},
+    {text: '3', url: 'null'},
+    {text: '4', url: 'null'},
+    {text: '5', url: 'null'}
+]));
+
+vanillaHeader.setAttribute('notifications', JSON.stringify([{
+    id: 1,
+    content: "mohammad ahmmad al-hadidi commented today on your new last bad post you publish it before three years",
+    image: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+    time: "34 minutes ago",
+    readed: !(1%3 ==  0),
+    url: ""
+}]));
 
 //vanillaNotifications.open();
 
@@ -70,6 +106,11 @@ vanillaAddPostTemplate.open().then((images, videos)=> {
 
 //vanillaNotifications.removePlaceHolders();
 /*
+vanillaAddPostTemplate.open().then((images, videos)=> {
+    console.log("post");
+}).catch(() => {
+    console.log("exit");
+});
 for(let i = 0; i < 20; i++) {
     vanillaNotifications.push(
         i,

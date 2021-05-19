@@ -1,0 +1,109 @@
+$pageDirection : ltr;
+
+$pageReverseDirection: rtl;
+$nauralAlign: left;
+$nauralReverseAlign: right;
+@if $pageDirection == rtl {
+    $pageReverseDirection: ltr;
+    $nauralAlign: right;
+    $nauralReverseAlign: left;
+}
+
+/* font : */
+$defaultFontFamily: normal;
+$defaultLineHeight: 1;
+$defaultFontSize: 1rem;
+
+/* colors : */
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBackgroundColor: #67d4ff; // rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: #01010191;
+$defaultPlaceHolderColor: #e6e6e6;
+$pageMainColor: #fff;
+$subColor: #e6e6e6;
+$styleColor: #67d4ff; // rgb(148, 240, 148);
+$defaultTextColor: #000;
+$defaultWiteTextColor: #868181;
+
+$pageDefaultButtonsBorderRadius: 0.3rem;
+
+%default-button {
+    font-size: $defaultFontSize;
+    padding: 0.5 * $defaultFontSize $defaultFontSize;
+    margin: 0.5 * $defaultFontSize;
+    background-color: $pageDefaultButtonsBackgroundColor;
+    color: $pageDefaultButtonsTextColor;
+    border: 0.05 * $defaultFontSize solid $pageDefaultButtonsTextColor; 
+    border-radius: $pageDefaultButtonsBorderRadius;
+    user-select: none;
+    cursor: pointer;
+}
+%default-button:hover {
+    color: red;
+    border-color: red;
+}
+%no-select {
+    user-select: none;
+}
+%vanilla-reset {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+}
+%vanilla-reset * {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+    text-decoration: unset;
+}
+
+$defaultBorder: 1px solid #e9e9e9;
+
+$defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+
+.vanilla-container {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .vanilla-container {
+        width: 540px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 768px) {
+    .vanilla-container {
+        width: 720px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 992px) {
+    .vanilla-container {
+        width: 960px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 1200px) {
+    .vanilla-container {
+        width: 1140px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 1400px) {
+    .vanilla-container {
+        width: 1320px;
+        margin: 0 auto;
+    }
+}

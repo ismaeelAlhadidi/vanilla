@@ -1,0 +1,141 @@
+@import "./../_variables";
+
+$headerHeight: 8vh;
+
+$profilePictureSize: $headerHeight/1.2;
+
+$profilePictureSectionWidth: $profilePictureSize*1.6;
+
+$iconSectionWidth: 105px;
+
+%icon-with-text-in-header {
+    cursor: pointer;
+    padding: $headerHeight/2-$profilePictureSize/2 $profilePictureSectionWidth/2-$profilePictureSize/2; 
+    color: inherit;
+    width: $iconSectionWidth;
+    text-align: center;
+    div {
+        height: 58%;
+        margin-top: 2%;
+        position: relative;
+        color: inherit;
+        svg {
+            position: absolute;
+            width: $profilePictureSize/1.9;
+            height: $profilePictureSize/1.9;
+            top: 50%;
+            left: 50%;
+            transform: translate(-45%, -50%);
+            color: inherit;
+            path {
+                color: inherit;
+            }
+        }
+    }
+    span {
+        height: 40%;
+        font-size: $defaultFontSize/1.1;
+        color: inherit;
+    }
+    &:hover {
+        border-bottom: 2px solid #7c7c82;
+    }
+}
+
+.vanilla-header {
+    @extend %vanilla-reset;
+    @extend %no-select;
+    margin: 0;
+    width: 100vw;
+    height: $headerHeight;
+    background-color: $styleColor;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    & > div {
+        position: relative;
+        height: inherit;
+        color: #7c7c82;
+        & > div:first-of-type {
+            height: inherit;
+            position: absolute;
+            #{$nauralAlign}: $profilePictureSectionWidth*1.3;
+            width: 2*$iconSectionWidth;
+            color: inherit;
+            & > section {
+                overflow: hidden;
+                height: inherit;
+                position: absolute;
+                &:first-of-type {
+                    @extend %icon-with-text-in-header;
+                    #{$nauralAlign}: 0;
+                }
+                &:nth-of-type(2) {
+                    @extend %icon-with-text-in-header;
+                    #{$nauralAlign}: $iconSectionWidth;
+                    border-#{$nauralAlign}: unset;
+                }
+            }
+        }
+        & > section {
+            overflow: hidden;
+            height: inherit;
+            position: absolute;
+            &:first-of-type {
+                width: $profilePictureSectionWidth;
+                padding: $headerHeight/2-$profilePictureSize/2 $profilePictureSectionWidth/2-$profilePictureSize/2;
+                #{$nauralAlign}: 0;
+                & > img {
+                    cursor: pointer;
+                    width: $profilePictureSize;
+                    height: $profilePictureSize;
+                    border-radius: 50%;
+                    border: $defaultBorder;
+                }
+            }
+        }
+
+        & > .vanilla-header-logo {
+            overflow: hidden;
+            width: $iconSectionWidth;
+            height: inherit;
+            position: absolute;
+            cursor: pointer;
+            #{$nauralReverseAlign}: $profilePictureSectionWidth/2-$profilePictureSize/2;
+            & > a {
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 442px) {
+    .vanilla-header {
+        & > div {
+            & > .vanilla-header-logo {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 320px) {
+    .vanilla-header {
+        & > div {
+            & > div:first-of-type {
+                #{$nauralAlign}: $profilePictureSectionWidth*1;
+            }
+        }
+    }
+}
+
+@media (min-width: 500px) {
+    .vanilla-header-user-list {
+        & > div {
+            #{$nauralAlign}: 10px !important;
+        }
+    }
+}
