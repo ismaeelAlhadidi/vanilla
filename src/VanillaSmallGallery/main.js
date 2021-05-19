@@ -4,7 +4,7 @@ export default class VanillaSmallGallery extends HTMLElement {
 
     static emptyMessage = "no Images or Videos now";
 
-    constructor (width = 340, height = 440, images = null, videos = null) {
+    constructor (width = 340, height = 440, images = null, videos = null, canRemove = false) {
         super();
         this._width = width;
         this._height = height;
@@ -12,12 +12,16 @@ export default class VanillaSmallGallery extends HTMLElement {
         this._videos = videos;
         this._currentIndex = 0;
         this.changing = false;
+        this.canRemove = canRemove;
     }
 
     connectedCallback() {
 
         this.innerHTML = `
             <div id="VanillaSmallGallery" class="vanilla-small-gallery" style="width: ${ this.width }px; height: ${ this.height }px">
+                <svg id="VanillaSmallGalleryRemoveButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
+                    <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
+                </svg>
                 <div id="VanillaInnerSmallGallery">
                     <img id="VanillaSmallGalleryCurrentImage"/>
                     <video id="VanillaSmallGalleryCurrentVideo"></video>
@@ -45,6 +49,15 @@ export default class VanillaSmallGallery extends HTMLElement {
         if(vanillaSmallGalleryPrevButton != null) {
             vanillaSmallGalleryPrevButton.addEventListener('click', () => { if(!this.changing) this.currentIndex-- });
         }
+
+        let vanillaSmallGalleryRemoveButton = document.getElementById("VanillaSmallGalleryRemoveButton");
+        if(vanillaSmallGalleryRemoveButton != null) {
+            vanillaSmallGalleryRemoveButton.addEventListener('click', () => {
+                if(! this.canRemove) return;
+
+                this.remove(this.currentIndex);
+            });
+        }
     }
 
     addImage(url) {
@@ -70,14 +83,27 @@ export default class VanillaSmallGallery extends HTMLElement {
     removeImage(index) {
         if(index < 0 || index > this.images.length-1) return;
         this.images.splice(index, 1);
-        this.currentIndex = ( this.currentIndex > index ? this.currentIndex-1 : this.currentIndex );
+        this.currentIndex = ( this.currentIndex >= index ? ( this.currentIndex-1 < 0 ? 0 : this.currentIndex-1 ) : this.currentIndex );
     }
 
     removeVideo(index) {
         let videoIndex = index - ( this.images != null ? this.images.length : 0 );
         if(videoIndex < 0 || videoIndex > this.videos.length-1) return;
         this.videos.splice(videoIndex, 1);
-        this.currentIndex = ( this.currentIndex > index ? this.currentIndex-1 : this.currentIndex );
+        this.currentIndex = ( this.currentIndex >= index ? ( this.currentIndex-1 < 0 ? 0 : this.currentIndex-1 ) : this.currentIndex );
+    }
+
+    remove(index) {
+        if(! Array.isArray(this.images)) {
+            this.removeVideo(index);
+            return;
+        }
+        if(index >= this.images.length) {
+            this.removeVideo(index);
+            return;
+        }
+
+        this.removeImage(index);
     }
 
     clear() {
@@ -139,6 +165,8 @@ export default class VanillaSmallGallery extends HTMLElement {
         this.resetNav(blobsCount);
 
         this.checkIfGalleryIsEmpty(blobsCount);
+
+        this.checkIfCanRemove(blobsCount);
 
         let vanillaSmallGalleryCurrentImage = document.getElementById("VanillaSmallGalleryCurrentImage");
         let vanillaSmallGalleryCurrentVideo = document.getElementById("VanillaSmallGalleryCurrentVideo");
@@ -258,6 +286,17 @@ export default class VanillaSmallGallery extends HTMLElement {
         }
         vanillaSmallGalleryEmptyMessage.setAttribute("style", "");
     }
+    
+    checkIfCanRemove(blobsCount) {
+        let VanillaSmallGalleryRemoveButton = document.getElementById("VanillaSmallGalleryRemoveButton");
+        if(VanillaSmallGalleryRemoveButton == null) return;
+        if(blobsCount == 0 || ! this.canRemove) {
+            VanillaSmallGalleryRemoveButton.setAttribute("style", "");
+            return;
+        }
+        VanillaSmallGalleryRemoveButton.setAttribute("style", "display: block !important;");
+    }
+
 }
 
 window.customElements.define('vanilla-small-gallery', VanillaSmallGallery);

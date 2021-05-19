@@ -1,0 +1,219 @@
+$pageDirection : ltr;
+
+$pageReverseDirection: rtl;
+$nauralAlign: left;
+$nauralReverseAlign: right;
+@if $pageDirection == rtl {
+    $pageReverseDirection: ltr;
+    $nauralAlign: right;
+    $nauralReverseAlign: left;
+}
+
+/* font : */
+$defaultFontFamily: normal;
+$defaultLineHeight: 1;
+$defaultFontSize: 1rem;
+
+/* colors : */
+$PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
+$pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
+$pageDefaultButtonsTextColor: #01010191;
+$defaultPlaceHolderColor: #e6e6e6;
+$pageMainColor: #fff;
+$subColor: #e6e6e6;
+$styleColor: rgb(148, 240, 148);
+$defaultTextColor: #000;
+$defaultWiteTextColor: #868181;
+
+$pageDefaultButtonsBorderRadius: 0.3rem;
+
+%default-button {
+    font-size: $defaultFontSize;
+    padding: 0.5 * $defaultFontSize $defaultFontSize;
+    margin: 0.5 * $defaultFontSize;
+    background-color: $pageDefaultButtonsBackgroundColor;
+    color: $pageDefaultButtonsTextColor;
+    border: 0.05 * $defaultFontSize solid $pageDefaultButtonsTextColor; 
+    border-radius: $pageDefaultButtonsBorderRadius;
+    user-select: none;
+    cursor: pointer;
+}
+%default-button:hover {
+    color: red;
+    border-color: red;
+}
+%no-select {
+    user-select: none;
+}
+%vanilla-reset {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+}
+%vanilla-reset * {
+    direction: $pageDirection;
+    text-align: $nauralAlign;
+    box-sizing: border-box;
+    color: $defaultTextColor;
+    border: none;
+    outline: none;
+    line-height: $defaultLineHeight;
+    font-size: $defaultFontSize;
+    font-family: $defaultFontFamily;
+}
+
+$defaultBorder: 1px solid #e9e9e9;
+
+$defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+
+%default-input-foucs {
+    transition: box-shadow 0.25s ease-in-out;
+}
+
+%default-input-foucs:focus {
+    box-shadow: 1px 1px 3px 3px #f5f5f5, -1px -1px 3px 3px #f5f5f5;
+}
+
+.vanilla-add-post-template {
+    @extend %vanilla-reset;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $PopUpTemplateBackColor;
+
+    & > div {
+        border-radius: $defaultFontSize*0.75;
+        width: 70%;
+        height: 70%;
+        bottom: 15%;
+        top: 15%;
+        left: 15%;
+        right: 15%;
+        background-color: $pageMainColor;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: fixed;
+        box-shadow: $defaultTemplateBoxShadow;
+        & > header {
+            @extend %no-select;
+            width: 100%;
+            padding: $defaultFontSize*0.75;
+            border-bottom: $defaultBorder;
+            & > .exit-icon {
+                width: $defaultFontSize*0.75*2;
+                height: $defaultFontSize*0.75*2;
+                position: absolute;
+                top: $defaultFontSize*0.5;
+                #{$nauralReverseAlign}: $defaultFontSize*0.75;
+                cursor: pointer;
+                path {
+                    color: $defaultWiteTextColor;
+                }
+            }
+        }
+
+        & > div {
+            margin-top: $defaultFontSize*1.5;
+            text-align: center;
+            & > section {
+                text-align: center;
+                width: 100%;
+                & > textarea {
+                    @extend %default-input-foucs;
+                    min-width: 250px;
+                    max-width: 250px;
+                    min-height: 150px;
+                    resize: unset;
+                    box-shadow: $defaultTemplateBoxShadow;
+                    padding: $defaultFontSize;
+                    border-radius: $defaultFontSize*0.1;
+                    line-height: $defaultLineHeight*1.75;
+                }
+                & > select {
+                    box-shadow: $defaultTemplateBoxShadow;
+                    padding: $defaultFontSize * 0.5;
+                    margin: $defaultFontSize;
+                    display: inline-block;
+                    min-width: 250px;
+                    border-radius: $defaultFontSize*0.1;
+                }
+                & > button {
+                    @extend %default-button;
+                    text-align: center;
+                    min-width: 150px;
+                    margin: $defaultFontSize*3;
+                }
+            }
+
+            & > div {
+                padding: $defaultFontSize*1.4 0;
+                text-align: center;
+                button {
+                    @extend %default-button;
+                }
+            }
+            & > vanilla-small-gallery {
+                display: inline-block;
+            }
+        }
+    }
+    & > input {
+        display: none !important;
+    }
+}
+
+@media (min-width: 970px) {
+    .vanilla-add-post-template {
+        & > div {
+            max-width: 779.513px;
+            left: 50%;
+            right: unset;
+            transform: translateX(-50%);
+            & > div {
+                float: $nauralAlign;
+            }
+            & > div:first-of-type {
+                width: 60%;
+            }
+            & > div:nth-of-type(2) {
+                width: 40%;
+                height: 80%;
+                position: relative;
+                & > section {
+                    textarea {
+                        min-height: 230px;
+                    }
+                }
+                & > section:last-of-type {
+                    position: absolute;
+                    bottom: 0;
+                    & > button {
+                        margin: $defaultFontSize;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .vanilla-add-post-template {
+        & > div {
+            border-radius: unset;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+}

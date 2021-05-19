@@ -177,6 +177,19 @@ $defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
             transform: translate(-50%, -50%);
         }
     }
+    & > svg {
+        z-index: 2;
+        display: none;
+        width: $defaultFontSize*0.75*2;
+        height: $defaultFontSize*0.75*2;
+        position: absolute;
+        top: $defaultFontSize*0.5;
+        #{$nauralReverseAlign}: $defaultFontSize*0.75;
+        cursor: pointer;
+        path {
+            color: $defaultWiteTextColor;
+        }
+    }
 }
 
 .loader-dual-ring {
