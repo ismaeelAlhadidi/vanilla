@@ -73,9 +73,49 @@ $defaultBorder: 1px solid #e9e9e9;
 
 $defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
 
+.vanilla-pop-up-container {
+    @extend %vanilla-reset;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $PopUpTemplateBackColor;
+    & > .vanilla-pop-up-inner-center-template {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    & > .vanilla-pop-up-exit-button {
+        width: $defaultFontSize*2.3;
+        height: $defaultFontSize*2.3;
+        padding: $defaultFontSize*0.15;
+        cursor: pointer;
+        position: fixed;
+        left: $defaultFontSize*1.5;
+        top: $defaultFontSize*1.5;
+        z-index: 3;
+        border-radius: 50%;
+        transition: background-color 0.5s;
+        &:hover {
+            background-color: $defaultWiteTextColor;
+        }
+        & > * {
+            width: $defaultFontSize*2;
+            height: $defaultFontSize*2;
+            display: inline-block;
+        }
+        * {
+            color: $defaultPlaceHolderColor;
+        }
+    }
+}
+
 .vanilla-container {
     width: 100%;
 }
+
 
 @media (min-width: 576px) {
     .vanilla-container {

@@ -24,7 +24,7 @@ export default class VanillaSmallGallery extends HTMLElement {
                 </svg>
                 <div id="VanillaInnerSmallGallery">
                     <img id="VanillaSmallGalleryCurrentImage"/>
-                    <video id="VanillaSmallGalleryCurrentVideo"></video>
+                    <video id="VanillaSmallGalleryCurrentVideo" controls></video>
                 </div>
                 <nav id="VanillaSmallGalleryNav"></nav>
                 <section id="VanillaSmallGalleryNextButton"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></section>
@@ -150,6 +150,15 @@ export default class VanillaSmallGallery extends HTMLElement {
 
     get currentIndex() { return this._currentIndex; }
     set currentIndex(value) {
+        
+        let imagesMaxLength = ( Array.isArray(this.images) ? this.images.length : 0 );
+        let videosMaxLength = ( Array.isArray(this.videos) ? this.videos.length : 0 );
+        let maxIndex = imagesMaxLength + videosMaxLength - 1;
+
+        let valueIsInRange = ( value <= maxIndex && value > -1);
+
+        value = ( valueIsInRange ? value : 0 );
+
         this._currentIndex = value;
         this.change();
     }
@@ -191,6 +200,7 @@ export default class VanillaSmallGallery extends HTMLElement {
         }
 
         vanillaSmallGalleryCurrentVideo.setAttribute("style", "display: none !important;");
+        vanillaSmallGalleryCurrentVideo.src = "";
         vanillaSmallGalleryCurrentImage.setAttribute("style", "display: block !important;");
         vanillaSmallGalleryCurrentImage.src = this.images[this.currentIndex];
         this.stopPlaceHolder();

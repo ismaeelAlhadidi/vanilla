@@ -1,0 +1,185 @@
+@import "./../_variables";
+
+.vanilla-gallery-template {
+    @extend %no-select;
+    background-color: $pageMainColor;
+    box-shadow: $defaultTemplateBoxShadow;
+    position: relative;
+    & > div {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        & > img {
+            width: 100%;
+            height: 100%;
+        }
+        & > video {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & > nav {
+        display: none;
+        bottom: 3%;
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        text-align: center;
+        & > span {
+            display: inline-block;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            margin: 0 5px 0;
+            background-color: $pageMainColor;
+            border: $defaultBorder;
+            cursor: pointer;
+        }
+        & > .vanilla-gallery-template-selected-nav-span {
+            background-color: #000;
+        }
+    }
+    & > section {
+        display: none;
+        width: 13%;
+        & > svg {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            cursor: pointer;
+            & > path {
+                fill: currentColor;
+                color: $pageMainColor;
+                border: $defaultBorder;
+            }
+        }
+    }
+    & > section:first-of-type {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    & > section:last-of-type {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .vanilla-gallery-template-placeholder {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        background-color: $defaultPlaceHolderColor;
+        .vanilla-gallery-template-progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            @extend %no-select;
+            text-align: center;
+        }
+    }
+    .vanilla-gallery-template-empty-message {
+        top: 0;
+        left: 0;
+        z-index: 2;
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        span {
+            text-align: center;
+            width: 80%;
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    & > svg {
+        z-index: 2;
+        display: none;
+        width: $defaultFontSize*0.75*2;
+        height: $defaultFontSize*0.75*2;
+        position: absolute;
+        top: $defaultFontSize*0.5;
+        #{$nauralReverseAlign}: $defaultFontSize*0.75;
+        cursor: pointer;
+        path {
+            color: $defaultWiteTextColor;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .vanilla-gallery-template {
+        width: 100%;
+    }
+}
+
+.loader-dual-ring {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+.loader-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 34px;
+    height: 34px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loader-dual-ring 1.2s linear infinite;
+}
+@keyframes loader-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.loader-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: loader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.loader-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.loader-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.loader-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes loader-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
