@@ -13,7 +13,7 @@ export default class VanillaPopup {
 
             if(this.alertTemplate == null) this.alertTemplate = document.getElementById("VanillaPopupAlert");
 
-            if(this.alertTemplate == null) this.alertTemplate = this.createAlert();
+            if(this.alertTemplate == null) this.alertTemplate = this.createAlert ();
 
             this.alertTemplate.open(title, message, buttonText, resolve);
         });
@@ -32,12 +32,14 @@ export default class VanillaPopup {
     }
 
     createAlert() {
-
-        return new Alert();
+        let alert = new Alert();
+        alert.setAttribute('id', 'VanillaPopupAlert');
+        return alert;
     }
 
     createConfirm() {
-
-        return new Confirm();
+        let confirm = new Confirm();
+        confirm.setAttribute('id', 'VanillaPopupConfirm');
+        return confirm;
     }
 }

@@ -1,6 +1,6 @@
 import "./style/main.scss";
-import VanillaNotification from "./Child/VanillaNotification";
-import VanillaNotificationPlaceHolder from "./Child/VanillaNotificationPlaceHolder";
+import VanillaNotification from "./child/VanillaNotification";
+import VanillaNotificationPlaceHolder from "./child/VanillaNotificationPlaceHolder";
 
 export default class VanillaNotifications extends HTMLElement {
 

@@ -1,0 +1,265 @@
+@import "./variables";
+
+$postCommentHeigth: 100px;
+$postCommentProfilePictureDivWidth: 45px;
+$postCommentProfilePictureSize: 40px;
+
+$commentHeigth: 110px;
+$commentProfilePictureDivWidth: 55px;
+$commentProfilePictureSize: 43px;
+
+@import "./post_comment_card";
+
+%vanilla-comment-card {
+    width: 100%;
+    //height: $commentHeigth;
+    position: relative;
+    & > div {
+        &:first-of-type {
+            width: $commentProfilePictureDivWidth;
+            height: $commentProfilePictureDivWidth;
+            padding: $commentProfilePictureDivWidth/2-$commentProfilePictureSize/2;
+            position: absolute;
+            top: 0;
+            #{$nauralAlign}: 0;
+            & > img {
+                width: $commentProfilePictureSize;
+                border-radius: 50%;
+                border: $defaultBorder;
+            }
+        }
+        &:nth-of-type(2) {
+            width: 100%;
+            padding: $commentProfilePictureDivWidth/2-$commentProfilePictureSize/2;
+            padding-#{$nauralAlign}: $commentProfilePictureDivWidth+$commentProfilePictureDivWidth/2-$commentProfilePictureSize/2;
+
+            & > div {
+                span {
+                    display: block;
+                    padding: 2px;
+                    &:first-of-type {
+                        color: $defaultLessWiteTextColor;
+                    }
+                    &:nth-of-type(2) {
+                        color: $defaultWiteTextColor;
+                        font-size: $defaultFontSize*0.85;
+                    }
+                }
+            }
+            & > p {
+                margin: 0;
+                padding: $defaultFontSize*0.5;
+                padding-#{$nauralAlign}: $defaultFontSize;
+                color: $defaultLessWiteTextColor;
+                line-height: 1.5*$defaultLineHeight;
+            }
+        }
+        &:nth-of-type(3) {
+            display: none;
+        }
+    }
+    & > footer {
+        width: 100%;
+        padding: $commentProfilePictureDivWidth/2-$commentProfilePictureSize/2;
+        padding-#{$nauralAlign}: $commentProfilePictureDivWidth+$commentProfilePictureDivWidth/2-$commentProfilePictureSize/2;
+        padding-bottom: 0;
+        
+        & > div {
+            width: 50%;
+            overflow: hidden;
+            height: 2.2*$defaultFontSize;
+            display: inline-block;
+            position: relative;
+            @extend %no-select;
+            cursor: pointer;
+            &:first-of-type {
+                &:hover {
+                    background-color: $defaultPlaceHolderColor;
+                }
+            }
+            & > span {
+                position: absolute;
+                top: 0;
+                #{$nauralAlign}: 20%;
+                display: block;
+                padding: $defaultFontSize*0.5;
+            }
+            & > svg {
+                position: absolute;
+                top: $defaultFontSize*0.5;
+                #{$nauralReverseAlign}: 80%;
+                display: block;
+                width: 1.2*$defaultFontSize;
+                height: 1.2*$defaultFontSize;
+            }
+        }
+    }
+}
+
+.vanilla-comment {
+    @extend %vanilla-reset;
+    width: 100%;
+    border-bottom: 1px solid #e9e9e9;
+    & > div {
+        @extend %vanilla-comment-card;
+    }
+
+    & > main {
+        // display: none;
+        height: 0;
+        overflow: hidden;
+        width: 100%;
+        padding-#{$nauralAlign}: 10%;
+
+        background-color: #f6f6f6; // $defaultPlaceHolderColor;
+
+        transition: height 1s;
+
+        & > footer {
+            @extend %post-comment-card;
+            position: relative;
+            border-top: $defaultBorder;
+            height: 80px;
+            & > div {
+                &:nth-of-type(2) {
+                    & > textarea {
+                        background-color: inherit;
+                        padding-top: 0.5rem;
+                        padding-bottom: 0.5rem;
+                        border: unset;
+                        box-shadow: unset;
+                        &:focus {
+                            border: unset;
+                            box-shadow: unset;
+                            border-bottom: 1.25px solid #aca3a3;
+                        }
+                    }
+                }
+                &:nth-of-type(3) {
+                    & > section {
+                        & > button {
+                            background-color: $pageMainColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.vanilla-replay {
+    border-bottom: 1.5px solid $pageMainColor;
+    & > div {
+        & > div {
+            margin-top: 5px;
+            &:first-of-type {
+                width: $postCommentProfilePictureDivWidth;
+                height: $postCommentProfilePictureDivWidth;
+                padding: $postCommentProfilePictureDivWidth/2-$postCommentProfilePictureSize/2;
+                & > img {
+                    width: $postCommentProfilePictureSize;
+                }
+            }
+            &:nth-of-type(2) {
+                padding: $postCommentProfilePictureDivWidth/2-$postCommentProfilePictureSize/2;
+                padding-#{$nauralAlign}: $postCommentProfilePictureDivWidth+$postCommentProfilePictureDivWidth/2-$postCommentProfilePictureSize/2;
+                & > div {
+                    padding-top: 5px;
+                    span {
+                        display: block;
+                        padding: 2px;
+                        &:first-of-type {
+                            font-size: $defaultFontSize*0.9;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: $defaultFontSize*0.80;
+                        }
+                    }
+                }
+                & > p {
+                    padding: $defaultFontSize*0.5;
+                    padding-#{$nauralAlign}: $defaultFontSize*0.75;
+                    font-size: $defaultFontSize*0.9;
+                    line-height: 1.3*$defaultLineHeight;
+                }
+            }
+        }
+    }
+}
+
+.vanilla-comment-placeholder {
+    & > div {
+        & > div {
+            &:first-of-type {
+                section {
+                    width: $commentProfilePictureSize;
+                    height: $commentProfilePictureSize;
+                    @extend %place-holder;
+                    border: $defaultBorder;
+                    border-radius: 50%;
+                }
+            }
+            &:nth-of-type(2) {
+                min-height: $commentProfilePictureDivWidth;
+                & > div {
+                    &:first-of-type {
+                        & > span {
+                            @extend %place-holder;
+                            display: block;
+                            margin: 3px;
+                            &:first-of-type {
+                                height: $defaultFontSize*0.7;
+                                width: 42%;
+                            }
+                            &:nth-of-type(2) {
+                                height: $defaultFontSize*0.5;
+                                width: 22%;
+                            }
+                        }
+                    }
+                }
+                & > p {
+                    span {
+                        @extend %place-holder;
+                        display: block;
+                        margin: 3px;
+                        height: $defaultFontSize*0.7;
+                        width: 95%;
+                        &:last-of-type {
+                            width: 60%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.vanilla-replay-placeholder {
+    & > div {
+        & > div {
+            & > div {
+
+                &:first-of-type {
+                    section {
+                        animation: place-holder-background-efect-in-gray-back-ground ease-in 4s 0s infinite;
+                    }
+                }
+                &:nth-of-type(2) {
+                    & > div {
+                        &:first-of-type {
+                            & > span {
+                                animation: place-holder-background-efect-in-gray-back-ground ease-in 4s 0s infinite;
+                            }
+                        }
+                    }
+                    & > p {
+                        span {
+                            animation: place-holder-background-efect-in-gray-back-ground ease-in 4s 0s infinite;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

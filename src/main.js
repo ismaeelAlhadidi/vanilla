@@ -7,6 +7,7 @@ import VanillaAddPostTemplate from "./VanillaAddPostTemplate/main";
 import VanillaHeader from "./VanillaHeader/main";
 import VanillaList from "./VanillaList/main";
 import VanillaGalleryTemplate from "./VanillaGalleryTemplate/main";
+import VanillaComments from "./VanillaComments/main";
 
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
@@ -53,8 +54,123 @@ var vanillaGalleryTemplate = new VanillaGalleryTemplate([
 ],[
     "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4"
 ]);
-vanillaGalleryTemplate.open(-1);
+//vanillaGalleryTemplate.open(-1);
 
+let comments = document.getElementById('temp');
+
+setTimeout(() => {
+    comments.push({
+        id: 1,
+        content: "comment from mohammad al-hadidi pushed in file main.js",
+        time: "3 hours ago",
+        userId: 3,
+        userName: "mohammad al-hadidi",
+        userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+        liked: false,
+        likesCount: 10,
+        replies: [
+            {
+                id: 2,
+                content: "comment from mohammad al-hadidi pushed in file main.js 1",
+                time: "3 hours ago",
+                userId: 3,
+                userName: "mohammad al-hadidi",
+                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+                liked: false,
+                likesCount: 10
+            },
+            {
+                id: 3,
+                content: "comment from mohammad al-hadidi pushed in file main.js 2",
+                time: "3 hours ago",
+                userId: 3,
+                userName: "mohammad al-hadidi",
+                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+                liked: true,
+                likesCount: 10
+            }
+        ],
+    });
+    comments.push({
+        id: 2,
+        content: "comment from mohammad al-hadidi pushed in file main.js",
+        time: "3 hours ago",
+        userId: 3,
+        userName: "mohammad al-hadidi",
+        userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+        liked: true,
+        likesCount: 10,
+        replies: [
+            {
+                id: 4,
+                content: "comment from mohammad al-hadidi pushed in file main.js",
+                time: "3 hours ago",
+                userId: 3,
+                userName: "mohammad al-hadidi",
+                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+                liked: false,
+                likesCount: 10
+            },
+            {
+                id: 5,
+                content: "comment from mohammad al-hadidi pushed in file main.js",
+                time: "3 hours ago",
+                userId: 3,
+                userName: "mohammad al-hadidi",
+                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+                liked: false,
+                likesCount: 10
+            }
+        ],
+    });
+}, 2000);
+
+// comments.commentsUrl = "";
+
+/*
+comments.push({
+    id: 1,
+    content: "comment from mohammad al-hadidi pushed in file main.js",
+    time: "3 hours ago",
+    userId: 3,
+    userName: "mohammad al-hadidi",
+    userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+    liked: false,
+    likesCount: 10
+});
+comments.push({
+    id: 2,
+    content: "comment from mohammad al-hadidi pushed in file main.js",
+    time: "3 hours ago",
+    userId: 3,
+    userName: "mohammad al-hadidi",
+    userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+    liked: false,
+    likesCount: 10
+});
+comments.push({
+    id: 3,
+    content: "comment from mohammad al-hadidi pushed in file main.js",
+    time: "3 hours ago",
+    userId: 3,
+    userName: "mohammad al-hadidi",
+    userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+    liked: false,
+    likesCount: 10
+});
+comments.push({
+    id: 4,
+    content: "comment from mohammad al-hadidi pushed in file main.js",
+    time: "3 hours ago",
+    userId: 3,
+    userName: "mohammad al-hadidi",
+    userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+    liked: false,
+    likesCount: 10
+});
+
+//let vanillaComments = new VanillaComments();
+//document.body.appendChild(vanillaComments);
 
 /*
 var vanillaList = new VanillaList(0, "list",[
