@@ -126,7 +126,7 @@ setTimeout(() => {
     });
 }, 2000);
 
-vanillaPopup.likes(1, 'Post', 'likes list', [
+vanillaPopup.follower(1, 'Post', 'follower list', [
     {
         id: 0,
         userName: 'esmaeel al-hadidi',

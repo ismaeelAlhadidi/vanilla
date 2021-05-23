@@ -8,7 +8,7 @@ export default class VanillaLikes extends HTMLElement {
 
     static defaultZIndex = 10;
 
-    constructor (componentId, componentType, title, list = null) {
+    constructor (componentId, componentType, title, list = null, type = 'likes') {
         super();
 
         this.componentId = componentId;
@@ -18,7 +18,7 @@ export default class VanillaLikes extends HTMLElement {
 
         this.list = list;
 
-        this.likesList = new VanillaLikesList(this.componentId, this.componentType, this.title, this.list);
+        this.likesList = new VanillaLikesList(this.componentId, this.componentType, this.title, this.list, type);
 
         document.body.appendChild(this);
     }

@@ -9,6 +9,28 @@ import VanillaLikes from "./PopupsModules/VanillaLikes";
 export default class VanillaPopup {
 
 
+    following(componentId, componentType, title, list) {
+
+        if(! Array.isArray(list)) return;
+
+        if(list.length == 0) return;
+
+        let likes = new VanillaLikes(componentId, componentType, title, list, 'following');
+
+        likes.open();
+    }
+
+    follower(componentId, componentType, title, list) {
+
+        if(! Array.isArray(list)) return;
+
+        if(list.length == 0) return;
+
+        let likes = new VanillaLikes(componentId, componentType, title, list, 'follower');
+
+        likes.open();
+    }
+
     likes(componentId, componentType, title, list) {
 
         if(! Array.isArray(list)) return;

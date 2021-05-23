@@ -3,12 +3,16 @@ import "./style/main.scss";
 import VanillaList from "./../VanillaList/main";
 
 import VanillaLike from "./child/VanillaLike";
+import VanillaFollower from "./child/VanillaFollower";
+import VanillaFollowing from "./child/VanillaFollowing";
 
 export default class VanillaLikesList extends VanillaList {
 
-    constructor (componentId, componentType, title, list = null) {
+    constructor (componentId, componentType, title, list = null, type = 'likes') {
 
         super("Likes" + componentType + componentId, title, list);
+
+        this.type = type;
     }
 
     connectedCallback() {
@@ -93,7 +97,11 @@ export default class VanillaLikesList extends VanillaList {
         
         if(VanillaListInnerTemplate == null) return;
 
-        VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, like));
+        if(this.type == 'likes') VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, like));
+
+        else if(this.type == 'following') VanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, like));
+
+        else VanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, like));
 
         this.list.push(like);
     }
@@ -118,11 +126,29 @@ export default class VanillaLikesList extends VanillaList {
 
         parent.appendChild(VanillaListInnerTemplate);
 
-        for(let i = 0; i < this.list.length; i++) {
+        if(this.type == 'likes') {
+            for(let i = 0; i < this.list.length; i++) {
 
-            VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i]));
+                VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i]));
+            }
+            return;
         }
-        
+
+        if(this.type == 'following') {
+            for(let i = 0; i < this.list.length; i++) {
+
+                VanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, this.list[i]));
+            }
+            return;
+        }
+
+        if(this.type == 'follower') {
+            for(let i = 0; i < this.list.length; i++) {
+
+                VanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, this.list[i]));
+            }
+            return;
+        }
     }
 }
 
