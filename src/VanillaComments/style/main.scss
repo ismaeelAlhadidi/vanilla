@@ -26,6 +26,7 @@
         overflow-y: auto;
         box-shadow: $defaultInnerBoxShadow;
         & > .vanilla-comments-empty-massege {
+            @extend %no-select;
             display: none;
             width: 100%;
             height: 100%;

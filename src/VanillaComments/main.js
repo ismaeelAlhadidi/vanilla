@@ -214,6 +214,8 @@ export default class VanillaComments extends HTMLElement {
         let placeHolders = document.querySelectorAll('.vanilla-comment-placeholder');
         if(VanillaCommentsInnerTemplate == null || placeHolders == null) return;
         placeHolders.forEach((element) => {
+            if(element.parentElement == null || element.parentElement == undefined) return;
+            if(VanillaCommentsInnerTemplate != element.parentElement.parentElement) return;
             VanillaCommentsInnerTemplate.removeChild(element.parentElement);
         });
         this.checkEmpty();

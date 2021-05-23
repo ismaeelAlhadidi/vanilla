@@ -1,0 +1,186 @@
+@import "./../variables";
+
+$commentDivWidth: 340px;
+
+$galleryMinWidth: 500px;
+
+
+%content-div {
+    width: 80%;
+    position: absolute;
+    max-height: 85%;
+    background-color: rgba(0, 0, 0, 0.29);
+    z-index: 2;
+    bottom: 13%;
+    color: #fff;
+    left: 1rem;
+    padding: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 3px;
+}
+
+.vanilla-open-post-template {
+    & > div {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $pageMainColor;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: fixed;
+        box-shadow: $defaultTemplateBoxShadow;
+        & > section {
+            display: block;
+            &:first-of-type {
+                padding-#{$nauralReverseAlign}: $commentDivWidth;
+                & > div {
+                    min-width: $galleryMinWidth;
+                    max-width: 80%;
+                    max-height: 80%;
+                    position: relative;
+                    .vanilla-open-post-template-content-div {
+                        @extend %content-div;
+
+                        & > span {
+                            @extend %no-select;
+                            font-weight: 600;
+                            cursor: pointer;
+                            color: $styleColor;
+                        }
+                    }
+                    .vanilla-small-gallery {
+                        width: 100%;
+                        height: 100%;
+                        & > div {
+                            & > video, & > img {
+                                position: static;
+                                transform: unset;
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+                    &:nth-of-type(2) {
+                        & > footer {
+                            width: 100%;
+                            padding: 6px;
+                            padding-bottom: 0;
+                            & > div {
+                                width: 50%;
+                                overflow: hidden;
+                                height: 2.2*$defaultFontSize;
+                                display: inline-block;
+                                position: relative;
+                                @extend %no-select;
+                                cursor: pointer;
+                                &:first-of-type {
+                                    border-#{$nauralReverseAlign}: $defaultBorder;
+                                }
+                                & > span {
+                                    position: absolute;
+                                    top: 0;
+                                    #{$nauralAlign}: 20%;
+                                    display: block;
+                                    padding: $defaultFontSize*0.5;
+                                }
+                                & > svg {
+                                    position: absolute;
+                                    top: $defaultFontSize*0.5;
+                                    #{$nauralReverseAlign}: 80%;
+                                    display: block;
+                                    width: 1.2*$defaultFontSize;
+                                    height: 1.2*$defaultFontSize;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            &:nth-of-type(2) {
+                position: absolute;
+                top: 0;
+                #{$nauralReverseAlign}: 0;
+                width: $commentDivWidth;
+                height: 100%;
+                padding: 1.5px;
+            }
+        }
+    }
+}
+
+@media (max-width: 992px) {
+
+    $commentDivWidth: 300px;
+
+    $galleryMinWidth: 400px;
+
+    .vanilla-open-post-template {
+        & > div {
+            & > section {
+                &:first-of-type {
+                    padding-#{$nauralReverseAlign}: $commentDivWidth;
+                    & > div {
+                        min-width: $galleryMinWidth;
+                        max-width: 80%;
+                        max-height: 80%;
+                    }
+                }
+                &:nth-of-type(2) {
+                    width: $commentDivWidth;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    $galleryMinWidth: 550px;
+
+    .vanilla-open-post-template {
+        & > div {
+            & > section {
+                &:first-of-type {
+                    padding-#{$nauralReverseAlign}: 0;
+                    & > div {
+                        min-width: $galleryMinWidth;
+                        max-width: 80%;
+                        max-height: 80%;
+                    }
+                }
+                &:nth-of-type(2) {
+                    width: unset;
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+
+    $galleryMinWidth: 100%;
+
+    .vanilla-open-post-template {
+        & > div {
+            width: 100%;
+            & > section {
+                &:first-of-type {
+                    padding-#{$nauralReverseAlign}: 0;
+                    & > div {
+                        min-width: $galleryMinWidth;
+                        max-width: $galleryMinWidth;
+                        width: $galleryMinWidth;
+                        max-height: unset;
+                    }
+                }
+                &:nth-of-type(2) {
+                    width: unset;
+                    display: none;
+                }
+            }
+        }
+    }
+}

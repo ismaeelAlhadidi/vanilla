@@ -9,6 +9,7 @@ import VanillaList from "./VanillaList/main";
 import VanillaGalleryTemplate from "./VanillaGalleryTemplate/main";
 import VanillaComments from "./VanillaComments/main";
 import VanillaLikesList from "./VanillaLikesList/main";
+import VanillaOpenPostTemplate from "./VanillaOpenPostTemplate/main";
 
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
@@ -48,13 +49,13 @@ var vanillaPopup = new VanillaPopup();
 
 var vanillaNotifications = new VanillaNotifications();
 
-var vanillaGalleryTemplate = new VanillaGalleryTemplate([
+/*var vanillaGalleryTemplate = new VanillaGalleryTemplate([
     "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
     "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
     "https://homepages.cae.wisc.edu/~ece533/images/boat.png"
 ],[
     "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4"
-]);
+]);*/
 //vanillaGalleryTemplate.open(-1);
 
 let comments = document.getElementById('temp');
@@ -125,7 +126,7 @@ setTimeout(() => {
         ],
     });
 }, 2000);
-
+/*
 vanillaPopup.follower(1, 'Post', 'follower list', [
     {
         id: 0,
@@ -335,6 +336,21 @@ vanillaHeader.setAttribute('notifications', JSON.stringify([{
     readed: !(1%3 ==  0),
     url: ""
 }]));
+
+let post = new VanillaOpenPostTemplate(24, 13, [
+        "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
+        "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
+        "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+        "https://homepages.cae.wisc.edu/~ece533/images/baboon.png",
+        "https://homepages.cae.wisc.edu/~ece533/images/monarch.png",
+        "https://homepages.cae.wisc.edu/~ece533/images/watch.png"
+    ],[
+        "https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4"
+    ], "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages"
+    ,'just now', 1, true, 200, "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", ''
+);
+
+post.open();
 
 //vanillaNotifications.open();
 

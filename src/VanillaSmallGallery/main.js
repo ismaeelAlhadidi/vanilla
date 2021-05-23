@@ -4,7 +4,7 @@ export default class VanillaSmallGallery extends HTMLElement {
 
     static emptyMessage = "no Images or Videos now";
 
-    constructor (width = 340, height = 440, images = null, videos = null, canRemove = false) {
+    constructor (width = '340px', height = '440px', images = null, videos = null, canRemove = false) {
         super();
         this._width = width;
         this._height = height;
@@ -18,7 +18,7 @@ export default class VanillaSmallGallery extends HTMLElement {
     connectedCallback() {
 
         this.innerHTML = `
-            <div id="VanillaSmallGallery" class="vanilla-small-gallery" style="width: ${ this.width }px; height: ${ this.height }px">
+            <div id="VanillaSmallGallery" class="vanilla-small-gallery" style="width: ${ this.width }; height: ${ this.height }">
                 <svg id="VanillaSmallGalleryRemoveButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
                     <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
                 </svg>
@@ -115,14 +115,14 @@ export default class VanillaSmallGallery extends HTMLElement {
     get width() { return this._width; }
     set width(value) {
         let vanillaSmallGallery = document.getElementById("VanillaSmallGallery");
-        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ value }px; height: ${ this.height }px`;
+        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ value }; height: ${ this.height }`;
         this._width = value;
     }
 
     get height() { return this._height; }
     set height(value) {
         let vanillaSmallGallery = document.getElementById("VanillaSmallGallery");
-        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ this.width }px; height: ${ value }px`;
+        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ this.width }; height: ${ value }`;
         this._height = value;
     }
 
@@ -164,6 +164,7 @@ export default class VanillaSmallGallery extends HTMLElement {
     }
 
     change() {
+        if(! this.isConnected) return;
         this.changing = true;
         this.startPlaceHolder();
         let blobsCount = ( this.images != null ? this.images.length : 0 ) 

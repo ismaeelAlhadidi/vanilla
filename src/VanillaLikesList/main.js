@@ -8,11 +8,16 @@ import VanillaFollowing from "./child/VanillaFollowing";
 
 export default class VanillaLikesList extends VanillaList {
 
-    constructor (componentId, componentType, title, list = null, type = 'likes') {
+    constructor (componentId, componentType, title, list = null, type = 'likes', autoFetch = false) {
 
         super("Likes" + componentType + componentId, title, list);
 
         this.type = type;
+
+
+        if(autoFetch) {
+            // fetch data
+        }
     }
 
     connectedCallback() {

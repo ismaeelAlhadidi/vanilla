@@ -9,35 +9,35 @@ import VanillaLikes from "./PopupsModules/VanillaLikes";
 export default class VanillaPopup {
 
 
-    following(componentId, componentType, title, list) {
+    following(userId, componentType, title, list, autoFetch = false) {
 
         if(! Array.isArray(list)) return;
 
         if(list.length == 0) return;
 
-        let likes = new VanillaLikes(componentId, componentType, title, list, 'following');
+        let likes = new VanillaLikes(userId, componentType, title, list, 'following', autoFetch);
 
         likes.open();
     }
 
-    follower(componentId, componentType, title, list) {
+    follower(userId, componentType, title, list, autoFetch = false) {
 
-        if(! Array.isArray(list)) return;
+        if(! autoFetch && ! Array.isArray(list)) return;
 
-        if(list.length == 0) return;
+        if(! autoFetch && list.length == 0) return;
 
-        let likes = new VanillaLikes(componentId, componentType, title, list, 'follower');
+        let likes = new VanillaLikes(userId, componentType, title, list, 'follower', autoFetch);
 
         likes.open();
     }
 
-    likes(componentId, componentType, title, list) {
+    likes(componentId, componentType, title, list, autoFetch = false) {
 
-        if(! Array.isArray(list)) return;
+        if(! autoFetch && ! Array.isArray(list)) return;
 
-        if(list.length == 0) return;
+        if(! autoFetch && list.length == 0) return;
 
-        let likes = new VanillaLikes(componentId, componentType, title, list);
+        let likes = new VanillaLikes(componentId, componentType, title, list, autoFetch);
 
         likes.open();
     }

@@ -222,6 +222,8 @@ export default class VanillaComment extends HTMLElement {
         let placeHolders = document.querySelectorAll('.vanilla-replay-placeholder');
         if(replies == null || placeHolders == null) return;
         placeHolders.forEach((element) => {
+            if(element.parentElement == null || element.parentElement == undefined) return;
+            if(replies != element.parentElement) return;
             replies.removeChild(element);
         });
         if(this.replyOpend) {
