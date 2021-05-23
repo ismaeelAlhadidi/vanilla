@@ -3,9 +3,22 @@ import "./style/main.scss";
 import Alert from "./PopupsModules/VanillaAlert.js";
 
 import Confirm from "./PopupsModules/VanillaConfirm.js";
+import VanillaLikes from "./PopupsModules/VanillaLikes";
 
 
 export default class VanillaPopup {
+
+
+    likes(componentId, componentType, title, list) {
+
+        if(! Array.isArray(list)) return;
+
+        if(list.length == 0) return;
+
+        let likes = new VanillaLikes(componentId, componentType, title, list);
+
+        likes.open();
+    }
 
     alert(title, message, buttonText) {
 

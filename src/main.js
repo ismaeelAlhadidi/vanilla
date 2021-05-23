@@ -8,6 +8,7 @@ import VanillaHeader from "./VanillaHeader/main";
 import VanillaList from "./VanillaList/main";
 import VanillaGalleryTemplate from "./VanillaGalleryTemplate/main";
 import VanillaComments from "./VanillaComments/main";
+import VanillaLikesList from "./VanillaLikesList/main";
 
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
@@ -57,7 +58,7 @@ var vanillaGalleryTemplate = new VanillaGalleryTemplate([
 //vanillaGalleryTemplate.open(-1);
 
 let comments = document.getElementById('temp');
-
+comments.style = "display: none !important;";
 setTimeout(() => {
     comments.push({
         id: 1,
@@ -124,6 +125,114 @@ setTimeout(() => {
         ],
     });
 }, 2000);
+
+vanillaPopup.likes(1, 'Post', 'likes list', [
+    {
+        id: 0,
+        userName: 'esmaeel al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 90,
+        following: false
+    },
+    {
+        id: 1,
+        userName: 'mohammad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 12,
+        following: true
+    },
+    {
+        id: 2,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 3,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 4,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 5,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 6,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 7,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 8,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 9,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 10,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 11,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    },
+    {
+        id: 12,
+        userName: 'ahmmad al-hadidi',
+        userPicture: 'https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+        userId: 1,
+        followers: 10,
+        following: false
+    }
+]);
+
 
 // comments.commentsUrl = "";
 

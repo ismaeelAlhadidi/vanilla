@@ -1,0 +1,22 @@
+@import "./../../variables";
+
+.vanilla-likes {
+    & > div {
+        & > header {
+            text-align: center;
+            & > .exit-icon {
+                display: block;
+            }
+        }
+
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 500px) {
+    .vanilla-likes {
+        & > div {
+            border-radius: unset;
+        }
+    }
+}
