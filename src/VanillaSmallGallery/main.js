@@ -236,6 +236,8 @@ export default class VanillaSmallGallery extends HTMLElement {
         let selected = document.querySelectorAll('.vanilla-small-gallery-selected-nav-span');
 
         selected.forEach((element) => {
+            if(element.parentElement == null || element.parentElement == undefined) return;
+            if(element.parentElement != vanillaSmallGalleryNav) return;
             element.setAttribute("class", "");
         });
 
