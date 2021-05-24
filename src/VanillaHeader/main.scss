@@ -38,7 +38,7 @@ $iconSectionWidth: 105px;
         color: inherit;
     }
     &:hover {
-        border-bottom: 2px solid #7c7c82;
+        border-bottom: 2px solid $defaultStyleTextColor;
     }
 }
 
@@ -57,7 +57,7 @@ $iconSectionWidth: 105px;
     & > div {
         position: relative;
         height: inherit;
-        color: #7c7c82;
+        color: $defaultStyleTextColor;
         & > div:first-of-type {
             height: inherit;
             position: absolute;

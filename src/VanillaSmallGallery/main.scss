@@ -1,3 +1,5 @@
+@import "./../variables";
+/*
 $pageDirection : ltr;
 
 $pageReverseDirection: rtl;
@@ -9,12 +11,12 @@ $nauralReverseAlign: right;
     $nauralReverseAlign: left;
 }
 
-/* font : */
+// font :
 $defaultFontFamily: normal;
 $defaultLineHeight: 1;
 $defaultFontSize: 1rem;
 
-/* colors : */
+// colors : 
 $PopUpTemplateBackColor: rgba(1, 1, 1, 0.568);
 $pageDefaultButtonsBackgroundColor: rgb(148, 240, 148);
 $pageDefaultButtonsTextColor: #01010191;
@@ -70,7 +72,7 @@ $pageDefaultButtonsBorderRadius: 0.3rem;
 
 $defaultBorder: 1px solid #e9e9e9;
 
-$defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);
+$defaultTemplateBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08);*/
 
 .vanilla-small-gallery {
     @extend %no-select;
