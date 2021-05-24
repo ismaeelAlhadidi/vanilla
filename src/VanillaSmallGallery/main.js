@@ -4,7 +4,7 @@ export default class VanillaSmallGallery extends HTMLElement {
 
     static emptyMessage = "no Images or Videos now";
 
-    constructor (width = '340px', height = '440px', images = null, videos = null, canRemove = false, templateId = 0) {
+    constructor (width = null, height = null, images = null, videos = null, canRemove = false, templateId = 0) {
         super();
         this.templateId = templateId;
         this._width = width;
@@ -19,7 +19,7 @@ export default class VanillaSmallGallery extends HTMLElement {
     connectedCallback() {
 
         this.innerHTML = `
-            <div id="Vanilla${this.templateId}SmallGallery" class="vanilla-small-gallery" style="width: ${ this.width }; height: ${ this.height }">
+            <div id="Vanilla${this.templateId}SmallGallery" class="vanilla-small-gallery" style="${ ( this.width != null ? 'width:' + this.width + ';' : '') } ${ ( this.height != null ? 'height:' + this.height + ';' : '') }">
                 <svg id="Vanilla${this.templateId}SmallGalleryRemoveButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
                     <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
                 </svg>
@@ -116,14 +116,18 @@ export default class VanillaSmallGallery extends HTMLElement {
     get width() { return this._width; }
     set width(value) {
         let vanillaSmallGallery = document.getElementById("Vanilla" + this.templateId + "SmallGallery");
-        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ value }; height: ${ this.height }`;
+        if(vanillaSmallGallery != null) {
+            vanillaSmallGallery.style = `${ ( value != null ? 'width:' + value + ';' : '') } ${ ( this.height != null ? 'height:' + this.height + ';' : '' ) }`;
+        }
         this._width = value;
     }
 
     get height() { return this._height; }
     set height(value) {
         let vanillaSmallGallery = document.getElementById("Vanilla" + this.templateId + "SmallGallery");
-        if(vanillaSmallGallery != null) vanillaSmallGallery.style = `width: ${ this.width }; height: ${ value }`;
+        if(vanillaSmallGallery != null) {
+            vanillaSmallGallery.style = `${ ( this.width != null ? 'width:' + this.width + ';' : '') } ${ ( value != null ? 'height:' + value + ';' : '' ) }`;
+        }
         this._height = value;
     }
 
@@ -196,8 +200,10 @@ export default class VanillaSmallGallery extends HTMLElement {
 
             vanillaSmallGalleryCurrentVideo.setAttribute("style", "display: block !important;");
             vanillaSmallGalleryCurrentVideo.src = this.videos[currentVideoIndex];
-            this.stopPlaceHolder();
-            this.changing = false;
+            vanillaSmallGalleryCurrentVideo.addEventListener('loadedmetadata', () => {
+                this.stopPlaceHolder();
+                this.changing = false;
+            });
             return;
         }
 
@@ -205,8 +211,10 @@ export default class VanillaSmallGallery extends HTMLElement {
         vanillaSmallGalleryCurrentVideo.src = "";
         vanillaSmallGalleryCurrentImage.setAttribute("style", "display: block !important;");
         vanillaSmallGalleryCurrentImage.src = this.images[this.currentIndex];
-        this.stopPlaceHolder();
-        this.changing = false;
+        vanillaSmallGalleryCurrentImage.addEventListener('load', () => {
+            this.stopPlaceHolder();
+            this.changing = false;
+        });
     }
 
     resetNav(blobsCount) {
@@ -288,7 +296,7 @@ export default class VanillaSmallGallery extends HTMLElement {
         setTimeout(() => {
             let vanillaSmallGalleryPlaceHolder = document.getElementById("Vanilla" + this.templateId + "SmallGalleryPlaceHolder");
             if(vanillaSmallGalleryPlaceHolder != null) vanillaSmallGalleryPlaceHolder.setAttribute("style", "");
-        }, 500);
+        }, 300);
     }
 
     checkIfGalleryIsEmpty(blobsCount) {

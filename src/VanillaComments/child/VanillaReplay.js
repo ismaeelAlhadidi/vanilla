@@ -89,6 +89,13 @@ export default class VanillaReplay extends HTMLElement {
                 });
             });
         }
+
+        let likesCount = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }LikesCount`);
+        if(likesCount != null) {
+            likesCount.addEventListener('click', () => {
+                this.vanillaPopup.likes(this.replay.id, 'Replay', 'likes list', null, true);
+            });
+        }
     }
 
     setLiked() {

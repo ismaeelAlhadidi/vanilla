@@ -210,8 +210,10 @@ export default class VanillaGalleryTemplate extends HTMLElement {
 
             VanillaGalleryTemplateCurrentVideo.setAttribute("style", "display: block !important;");
             VanillaGalleryTemplateCurrentVideo.src = this.videos[currentVideoIndex];
-            this.stopPlaceHolder();
-            this.changing = false;
+            VanillaGalleryTemplateCurrentVideo.addEventListener('loadedmetadata', () => {
+                this.stopPlaceHolder();
+                this.changing = false;
+            });
             return;
         }
 
@@ -219,8 +221,10 @@ export default class VanillaGalleryTemplate extends HTMLElement {
         VanillaGalleryTemplateCurrentVideo.src = "";
         VanillaGalleryTemplateCurrentImage.setAttribute("style", "display: block !important;");
         VanillaGalleryTemplateCurrentImage.src = this.images[this.currentIndex];
-        this.stopPlaceHolder();
-        this.changing = false;
+        VanillaGalleryTemplateCurrentImage.addEventListener('load', () => {
+            this.stopPlaceHolder();
+            this.changing = false;
+        });
     }
 
     resetNav(blobsCount) {
@@ -300,7 +304,7 @@ export default class VanillaGalleryTemplate extends HTMLElement {
         setTimeout(() => {
             let VanillaGalleryTemplatePlaceHolder = document.getElementById("VanillaGalleryTemplatePlaceHolder");
             if(VanillaGalleryTemplatePlaceHolder != null) VanillaGalleryTemplatePlaceHolder.setAttribute("style", "");
-        }, 500);
+        }, 300);
     }
 
     checkIfGalleryIsEmpty(blobsCount) {

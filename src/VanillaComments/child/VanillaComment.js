@@ -1,3 +1,4 @@
+import VanillaPopup from "../../VanillaPopup/main";
 import "./../style/comment.scss";
 
 import VanillaReplay from "./VanillaReplay";
@@ -47,6 +48,8 @@ export default class VanillaComment extends HTMLElement {
         this.replies = new Map();
 
         this.replyOpend = false;
+
+        this.vanillaPopup = new VanillaPopup();
     }
 
     connectedCallback() {
@@ -170,6 +173,13 @@ export default class VanillaComment extends HTMLElement {
                     this.setLiked();
 
                 });
+            });
+        }
+
+        let likesCount = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }LikesCount`);
+        if(likesCount != null) {
+            likesCount.addEventListener('click', () => {
+                this.vanillaPopup.likes(this.comment.id, 'Comment', 'likes list', null, true);
             });
         }
     }

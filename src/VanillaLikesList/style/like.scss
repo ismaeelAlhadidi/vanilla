@@ -5,3 +5,46 @@
     @extend %vanilla-like-card;
 
 }
+
+.vanilla-item-placeholder {
+    $defaultSmallPictureContainerWidth: 47px;
+    $defaultSmallPictureSize: 42px;
+
+    $defaultFollowingButtonWidth: 95px;
+    & > div {
+        &:first-of-type {
+            & > section {
+                width: $defaultSmallPictureSize;
+                height: $defaultSmallPictureSize;
+                border-radius: 50%;
+                border: $defaultBorder;
+                background-color: $defaultPlaceHolderColor;
+                @extend %place-holder;
+            }
+        }
+        &:nth-of-type(2) {
+            & > span {
+                background-color: $defaultPlaceHolderColor;
+                @extend %place-holder;
+                padding: $defaultSmallPictureContainerWidth/2-$defaultSmallPictureSize/2;
+                margin: 6px;
+                &:first-of-type {
+                    width: 45%;
+                    height: $defaultFontSize*0.6;
+                }
+                &:nth-of-type(2) {
+                    width: 30%;
+                    height: $defaultFontSize*0.5;
+                }
+            }
+        }
+        &:nth-of-type(3) {
+            & > button {
+                background-color: $defaultPlaceHolderColor;
+                width: $defaultFontSize*2.5;
+                height: $defaultFontSize*0.9;
+                @extend %place-holder;
+            }
+        }
+    }
+}

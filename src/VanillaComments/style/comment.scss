@@ -185,6 +185,9 @@ $commentProfilePictureSize: 43px;
             }
         }
     }
+    & > div > div > footer > div:first-of-type:hover {
+        background-color: transparent;
+    }
 }
 
 .vanilla-comment-placeholder {

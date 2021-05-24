@@ -15,13 +15,14 @@ export default class VanillaAddPostTemplate extends HTMLElement {
     static imageHeight = 350;
     static maxVideosDuration = 60;
 
-    constructor (imagesMaxCount = 1, videosMaxCount = 1, categories = null) {
+    constructor (imagesMaxCount = 1, videosMaxCount = 1, categories = null, cropp = true) {
         super();
         this.vanillaPopup = new VanillaPopup();
         this.vanillaCropper = new VanillaCropper();
         this.imagesMaxCount = imagesMaxCount;
         this.videosMaxCount = videosMaxCount;
         this.categories = categories;
+        this.cropp = cropp;
     }
 
     connectedCallback() {
@@ -54,8 +55,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
 
         let InnerVanillaSmallGallery = document.getElementById("InnerVanillaSmallGallery");
         if(InnerVanillaSmallGallery != null) {
-            InnerVanillaSmallGallery.width = VanillaAddPostTemplate.imageWidth;
-            InnerVanillaSmallGallery.height = VanillaAddPostTemplate.imageHeight;
+            InnerVanillaSmallGallery.setAttribute('style', `width: ${VanillaAddPostTemplate.imageWidth}px; height: ${VanillaAddPostTemplate.imageHeight}px`);
             InnerVanillaSmallGallery.canRemove = true;
         }
         this.gallery = InnerVanillaSmallGallery;
@@ -97,6 +97,12 @@ export default class VanillaAddPostTemplate extends HTMLElement {
                 if(! event.target.files[0]) return;
 
                 let fileReader = new FileReader();
+                if(! this.cropp) {
+                    this.loadFileReader(fileReader, event.target.files[0]).then((event) => {
+                        this.gallery.addImage(event.target.result);
+                    });
+                    return;
+                }
                 this.loadFileReader(fileReader, event.target.files[0]).then((event) => {
                     let image = new Image();
                     return this.loadImage(image, event.target.result);

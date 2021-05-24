@@ -37,7 +37,7 @@ export default class VanillaPopup {
 
         if(! autoFetch && list.length == 0) return;
 
-        let likes = new VanillaLikes(componentId, componentType, title, list, autoFetch);
+        let likes = new VanillaLikes(componentId, componentType, title, list, 'likes', autoFetch);
 
         likes.open();
     }

@@ -26,7 +26,7 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
 
         this.commentsTemplate = new VanillaComments(templateId, postId, null, null, profilePicture, commentsUrl);
 
-        this.smallGallery = new VanillaSmallGallery('', '', images, videos, false);
+        this.smallGallery = new VanillaSmallGallery(null, null, images, videos, false, templateId);
 
         this.gallery = new VanillaGalleryTemplate(images, videos, false);
 

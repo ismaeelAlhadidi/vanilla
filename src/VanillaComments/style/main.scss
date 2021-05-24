@@ -48,3 +48,11 @@
         border-top: $defaultBorder;
     }
 }
+
+@media (max-width: 500px) {
+    
+    .vanilla-comments > header .exit-icon {
+        display: none !important;
+    }
+}
+

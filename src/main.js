@@ -352,17 +352,21 @@ let post = new VanillaOpenPostTemplate(24, 13, [
 
 post.open();
 
+/*let vanillaAddPostTemplate = new VanillaAddPostTemplate(6, 1, null, false);
+
+vanillaAddPostTemplate.open().then((images, videos)=> {
+    console.log("post");
+}).catch(() => {
+    console.log("exit");
+});*/
+
 //vanillaNotifications.open();
 
 // vanillaNotifications.addPlaceHolders();
 
 //vanillaNotifications.removePlaceHolders();
 /*
-vanillaAddPostTemplate.open().then((images, videos)=> {
-    console.log("post");
-}).catch(() => {
-    console.log("exit");
-});
+
 for(let i = 0; i < 20; i++) {
     vanillaNotifications.push(
         i,

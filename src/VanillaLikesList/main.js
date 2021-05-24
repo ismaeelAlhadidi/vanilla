@@ -5,8 +5,42 @@ import VanillaList from "./../VanillaList/main";
 import VanillaLike from "./child/VanillaLike";
 import VanillaFollower from "./child/VanillaFollower";
 import VanillaFollowing from "./child/VanillaFollowing";
+import VanillaItemPlaceHolder from "./child/VanillaItemPlaceHolder";
 
 export default class VanillaLikesList extends VanillaList {
+
+    static emptyLikesMessage = "no likes yet";
+
+    static emptyFollowerMessage = "no followers yet";
+
+    static emptyFollowingMessage = "no following yet";
+
+    static fetchLikesCallBack = (componentId, componentType) => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([]);
+            }, 1000);
+        });
+    };
+
+    static fetchFollowerCallBack = (userId, temp) => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([]);
+            }, 1000);
+        });
+    };
+
+    static fetchFollowingCallBack = (userId, temp) => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([]);
+            }, 1000);
+        });
+    };
 
     constructor (componentId, componentType, title, list = null, type = 'likes', autoFetch = false) {
 
@@ -14,10 +48,11 @@ export default class VanillaLikesList extends VanillaList {
 
         this.type = type;
 
-
-        if(autoFetch) {
-            // fetch data
-        }
+        this.componentId = componentId;
+        this.componentType = componentType;
+        this.type = type;
+        
+        this.autoFetch = autoFetch;
     }
 
     connectedCallback() {
@@ -25,6 +60,17 @@ export default class VanillaLikesList extends VanillaList {
         super.connectedCallback();
 
         this.setAttribute('class', 'vanilla-likes');
+
+
+        if(this.autoFetch) {
+            this.startPlaceHolders();
+            let callBack = this.getCallBack(this.type);
+            if(callBack == null) {
+                this.stopPlaceHolders();
+                return;
+            }
+            this.fetchListFrom(callBack);
+        }
     }
 
     destroy() {
@@ -112,48 +158,179 @@ export default class VanillaLikesList extends VanillaList {
     }
 
     setList () {
-        if(! Array.isArray(this.list)) return;
+
+        this.startPlaceHolders();
+
+        if(! Array.isArray(this.list)){
+            this.stopPlaceHolders();
+            return;
+        }
 
         let VanillaListInnerTemplate = document.getElementById(`VanillaList${ this.id }InnerTemplate`);
 
         let parent = document.getElementById(`VanillaList${ this.id }`);
 
-        if(parent == null) return;
+        if(parent == null) {
+            this.stopPlaceHolders();
+            return;
+        }
+
+        if(this.list.length < 1) {
+            this.stopPlaceHolders();
+            return;
+        }
+
+        let newVanillaListInnerTemplate = document.createElement('main');
+
+        newVanillaListInnerTemplate.setAttribute('id', `VanillaList${ this.id }InnerTemplate`);
+
+        if(this.type == 'likes') {
+            for(let i = 0; i < this.list.length; i++) {
+
+                newVanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i]));
+            }
+        }
+
+        else if(this.type == 'following') {
+            for(let i = 0; i < this.list.length; i++) {
+
+                newVanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, this.list[i]));
+            }
+        }
+
+        else if(this.type == 'follower') {
+            for(let i = 0; i < this.list.length; i++) {
+
+                newVanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, this.list[i]));
+            }
+        }
+
+        this.stopPlaceHolders();
 
         if(VanillaListInnerTemplate != null) {
 
             parent.removeChild(VanillaListInnerTemplate);
         }
 
-        VanillaListInnerTemplate = document.createElement('main');
+        parent.appendChild(newVanillaListInnerTemplate);
+    }
 
-        VanillaListInnerTemplate.setAttribute('id', `VanillaList${ this.id }InnerTemplate`);
+    getCallBack(type) {
 
-        parent.appendChild(VanillaListInnerTemplate);
+        switch(type) {
+            case 'likes':
+                return VanillaLikesList.fetchLikesCallBack;
+            case 'follower':
+                return VanillaLikesList.fetchFollowerCallBack;
+            case 'following':
+                return VanillaLikesList.fetchFollowingCallBack;
+            default:
+                return null;
+        }
+    }
 
-        if(this.type == 'likes') {
-            for(let i = 0; i < this.list.length; i++) {
+    fetchListFrom(callBack) {
 
-                VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i]));
-            }
+        callBack(this.commponentId, this.componentType).then((result) => {
+
+            this.list = result;
+
+            this.stopPlaceHolders();
+        }).catch(() => {
+            this.stopPlaceHolders();
+        });
+    }
+
+
+    startPlaceHolders(count = 6) {
+
+        if(this.placeHolderStarted) return;
+        this.removeEmptyMessage();
+        this.placeHolderStarted = true;
+
+        let VanillaListInnerTemplate = document.getElementById(`VanillaList${ this.id }InnerTemplate`);
+        if(VanillaListInnerTemplate == null) {
+
+            this.placeHolderStarted = false;
             return;
         }
 
-        if(this.type == 'following') {
-            for(let i = 0; i < this.list.length; i++) {
+        for(let i = 0; i < count; i++) {
 
-                VanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, this.list[i]));
-            }
-            return;
+            VanillaListInnerTemplate.appendChild(new VanillaItemPlaceHolder());
+        }
+    }
+
+    stopPlaceHolders() {
+        
+        this.placeHolderStarted = false;
+
+        let VanillaListInnerTemplate = document.getElementById(`VanillaList${ this.id }InnerTemplate`);
+        if(VanillaListInnerTemplate == null) return;
+
+        let selected = document.querySelectorAll('.vanilla-item-placeholder');
+
+        if(selected == null) return;
+
+        selected.forEach((element) => {
+            let target = element.parentElement;
+            if(target == null || target == undefined) return;
+            if(target.parentElement == null || target.parentElement == undefined) return;
+            if(target.parentElement != VanillaListInnerTemplate) return;
+            VanillaListInnerTemplate.removeChild(target);
+        });
+
+        if(! Array.isArray(this.list) || this.list.length < 1) {
+            this.showEmptyMessage();
+        }
+    }
+
+    showEmptyMessage() {
+
+        let emptyMessage = document.getElementById('VanillaLikesListEmptyMessage' + this.componentId + this.componentType);
+
+        if(emptyMessage != null) return;
+
+        emptyMessage = document.createElement('section');
+
+        let emptyMessageInnerSpan = document.createElement('span');
+
+        switch(this.type) {
+            case 'likes':
+                emptyMessageInnerSpan.textContent = VanillaLikesList.emptyLikesMessage;
+                break;
+            case 'follower':
+                emptyMessageInnerSpan.textContent = VanillaLikesList.emptyFollowerMessage;
+                break;
+            case 'following':
+                emptyMessageInnerSpan.textContent = VanillaLikesList.emptyFollowingMessage;
+                break;
+            default:
+                return;
         }
 
-        if(this.type == 'follower') {
-            for(let i = 0; i < this.list.length; i++) {
+        emptyMessage.appendChild(emptyMessageInnerSpan);
 
-                VanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, this.list[i]));
-            }
-            return;
-        }
+        emptyMessage.setAttribute('class', 'vanilla-likes-list-empty-message');
+
+        emptyMessage.setAttribute('id', 'VanillaLikesListEmptyMessage' + this.componentId + this.componentType);
+
+        if(this.children.length > 0)
+        if(this.children[0].children.length > 1)
+        this.children[0].children[1].appendChild(emptyMessage);
+    }
+
+    removeEmptyMessage() {
+
+        let emptyMessage = document.getElementById('VanillaLikesListEmptyMessage' + this.componentId + this.componentType);
+
+        if(emptyMessage == null) return;
+
+        let parent = emptyMessage.parentElement;
+
+        if(parent == null || parent == undefined) return;
+
+        parent.removeChild(emptyMessage);
     }
 }
 
