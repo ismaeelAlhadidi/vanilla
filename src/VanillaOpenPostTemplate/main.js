@@ -28,7 +28,7 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
 
         this.smallGallery = new VanillaSmallGallery(null, null, images, videos, false, templateId);
 
-        this.gallery = new VanillaGalleryTemplate(images, videos, false);
+        this.gallery = new VanillaGalleryTemplate(images, videos, false, templateId);
 
         this.postId = postId;
         this.templateId = templateId;

@@ -15,7 +15,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
     static imageHeight = 350;
     static maxVideosDuration = 60;
 
-    constructor (imagesMaxCount = 1, videosMaxCount = 1, categories = null, cropp = true) {
+    constructor (imagesMaxCount = 1, videosMaxCount = 1, categories = null, cropp = true, templateId = 0) {
         super();
         this.vanillaPopup = new VanillaPopup();
         this.vanillaCropper = new VanillaCropper();
@@ -23,42 +23,47 @@ export default class VanillaAddPostTemplate extends HTMLElement {
         this.videosMaxCount = videosMaxCount;
         this.categories = categories;
         this.cropp = cropp;
+        this.templateId = templateId;
+
+        this.gallery = new VanillaSmallGallery('100%', '100%', null, null, true, templateId);
+        this.gallery.style = `width: ${VanillaAddPostTemplate.imageWidth}px; height: ${VanillaAddPostTemplate.imageHeight}px`;
     }
 
     connectedCallback() {
 
         this.innerHTML = `
-            <div id="VanillaAddPostTemplate" class="vanilla-add-post-template">
+            <div id="VanillaAddPostTemplate${this.templateId}" class="vanilla-add-post-template">
                 <div>
                     <header>
                         <span>${ VanillaAddPostTemplate.title }</span>
-                        <svg id="VanillaAddPostTemplateExitButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="exit-icon">
+                        <svg id="VanillaAddPostTemplate${this.templateId}ExitButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="exit-icon">
                             <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
                         </svg>
                     </header>
-                    <div>
-                        <vanilla-small-gallery id="InnerVanillaSmallGallery"></vanilla-small-gallery>
-                        <div><button id="VanillaAddPostTemplateAddImageButton">${ VanillaAddPostTemplate.addImageButtonText }</button><button id="VanillaAddPostTemplateAddVideoButton">${ VanillaAddPostTemplate.addVideoButtonText }</button></div>
+                    <div id="outerVanillaSmallGallery${this.templateId}">
+                        <div><button id="VanillaAddPostTemplate${this.templateId}AddImageButton">${ VanillaAddPostTemplate.addImageButtonText }</button><button id="VanillaAddPostTemplate${this.templateId}AddVideoButton">${ VanillaAddPostTemplate.addVideoButtonText }</button></div>
                     </div>
                     <div>
-                        <section><textarea id="VanillaAddPostTemplateContent" placeholder="${ VanillaAddPostTemplate.contentPlaceHolder }"></textarea></section>
-                        <section><select id="VanillaAddPostTemplateCategories"></select></section>
-                        <section><button id="VanillaAddPostTemplatePostButton">${ VanillaAddPostTemplate.postButtonText }</button></section>
+                        <section><textarea id="VanillaAddPostTemplate${this.templateId}Content" placeholder="${ VanillaAddPostTemplate.contentPlaceHolder }"></textarea></section>
+                        <section><select id="VanillaAddPostTemplate${this.templateId}Categories"></select></section>
+                        <section><button id="VanillaAddPostTemplate${this.templateId}PostButton">${ VanillaAddPostTemplate.postButtonText }</button></section>
                     </div>
                 </div>
-                <input id="VanillaAddPostTemplateImages" type="file" accept="image/*" />
-                <input id="VanillaAddPostTemplateVideos" type="file" accept="video/*" />
+                <input id="VanillaAddPostTemplate${this.templateId}Images" type="file" accept="image/*" />
+                <input id="VanillaAddPostTemplate${this.templateId}Videos" type="file" accept="video/*" />
             </div>
         `;
 
         this.style = "display: none !important;";
 
-        let InnerVanillaSmallGallery = document.getElementById("InnerVanillaSmallGallery");
-        if(InnerVanillaSmallGallery != null) {
-            InnerVanillaSmallGallery.setAttribute('style', `width: ${VanillaAddPostTemplate.imageWidth}px; height: ${VanillaAddPostTemplate.imageHeight}px`);
-            InnerVanillaSmallGallery.canRemove = true;
+        let outerVanillaSmallGallery = document.getElementById("outerVanillaSmallGallery" + this.templateId);
+        if(outerVanillaSmallGallery != null) {
+            if(outerVanillaSmallGallery.children.length > 0) {
+
+                outerVanillaSmallGallery.insertBefore(this.gallery, outerVanillaSmallGallery.children[0]);
+
+            } else outerVanillaSmallGallery.appendChild(this.gallery);
         }
-        this.gallery = InnerVanillaSmallGallery;
 
         this.setEvents();
 
@@ -67,7 +72,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
 
     setEvents() {
 
-        let VanillaAddPostTemplateExitButton = document.getElementById("VanillaAddPostTemplateExitButton");
+        let VanillaAddPostTemplateExitButton = document.getElementById("VanillaAddPostTemplate" + this.templateId + "ExitButton");
 
         if(VanillaAddPostTemplateExitButton != null) {
             VanillaAddPostTemplateExitButton.addEventListener('click', () => {
@@ -80,8 +85,8 @@ export default class VanillaAddPostTemplate extends HTMLElement {
             });
         }
 
-        let VanillaAddPostTemplateAddImageButton = document.getElementById("VanillaAddPostTemplateAddImageButton");
-        let VanillaAddPostTemplateImages = document.getElementById("VanillaAddPostTemplateImages");
+        let VanillaAddPostTemplateAddImageButton = document.getElementById("VanillaAddPostTemplate" + this.templateId + "AddImageButton");
+        let VanillaAddPostTemplateImages = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Images");
 
         if(VanillaAddPostTemplateAddImageButton != null && VanillaAddPostTemplateImages != null) {
             VanillaAddPostTemplateAddImageButton.addEventListener('click', () => {
@@ -122,8 +127,8 @@ export default class VanillaAddPostTemplate extends HTMLElement {
             });
         }
 
-        let VanillaAddPostTemplateAddVideoButton = document.getElementById("VanillaAddPostTemplateAddVideoButton");
-        let VanillaAddPostTemplateVideos = document.getElementById("VanillaAddPostTemplateVideos");
+        let VanillaAddPostTemplateAddVideoButton = document.getElementById("VanillaAddPostTemplate" + this.templateId + "AddVideoButton");
+        let VanillaAddPostTemplateVideos = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Videos");
 
         if(VanillaAddPostTemplateAddVideoButton != null && VanillaAddPostTemplateVideos != null) {
             VanillaAddPostTemplateAddVideoButton.addEventListener('click', () => {
@@ -159,7 +164,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
             });
         }
 
-        let VanillaAddPostTemplatePostButton = document.getElementById("VanillaAddPostTemplatePostButton");
+        let VanillaAddPostTemplatePostButton = document.getElementById("VanillaAddPostTemplate" + this.templateId + "PostButton");
         if(VanillaAddPostTemplatePostButton != null) {
             VanillaAddPostTemplatePostButton.addEventListener('click', () => {
                 
@@ -171,12 +176,12 @@ export default class VanillaAddPostTemplate extends HTMLElement {
                 }
 
                 let content = "";
-                let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplateContent");
+                let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Content");
                 if(VanillaAddPostTemplateContent != null) content = VanillaAddPostTemplateContent.textContent;
 
                 let category = null;
                 if(Array.isArray(this.categories)) {
-                    let VanillaAddPostTemplateCategories = document.getElementById("VanillaAddPostTemplateCategories");
+                    let VanillaAddPostTemplateCategories = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Categories");
                     if(VanillaAddPostTemplateCategories != null) {
                         category = VanillaAddPostTemplateCategories.value;
                     }
@@ -190,7 +195,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
 
     reset() {
 
-        let VanillaAddPostTemplateCategories = document.getElementById("VanillaAddPostTemplateCategories");
+        let VanillaAddPostTemplateCategories = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Categories");
         if(VanillaAddPostTemplateCategories != null) {
             if(! Array.isArray(this.categories)) {
                 VanillaAddPostTemplateCategories.style = "display: none !important;";
@@ -202,14 +207,14 @@ export default class VanillaAddPostTemplate extends HTMLElement {
                 }
             }
             for(let i = 0; i < this.categories.length; i++) {
-                let option = document.getElementById("option");
+                let option = document.createElement("option");
                 option.value = this.categories[i];
                 option.textContent = this.categories[i];
-                VanillaAddPostTemplateCategories.appendChild(this.categories[i]);
+                VanillaAddPostTemplateCategories.appendChild(option);
             }
         }
 
-        let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplateContent");
+        let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Content");
         if(VanillaAddPostTemplateContent != null) {
             VanillaAddPostTemplateContent.textContent = "";
         }
@@ -218,7 +223,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
     }
     
     open() {        
-        let vanillaAddPostTemplate = document.getElementById("VanillaAddPostTemplate");
+        let vanillaAddPostTemplate = document.getElementById("VanillaAddPostTemplate" + this.templateId);
         if(vanillaAddPostTemplate == null) {
             document.body.appendChild(this);
         }

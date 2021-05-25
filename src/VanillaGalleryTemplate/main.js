@@ -4,39 +4,40 @@ export default class VanillaGalleryTemplate extends HTMLElement {
 
     static emptyMessage = "no Images or Videos now";
 
-    constructor (images = null, videos = null, canRemove = false) {
+    constructor (images = null, videos = null, canRemove = false, templateId = 0) {
         super();
         this._images = images;
         this._videos = videos;
         this._currentIndex = 0;
         this.changing = false;
         this.canRemove = canRemove;
+        this.templateId = templateId;
     }
 
     connectedCallback() {
 
         this.innerHTML = `
-            <div id="VanillaGalleryTemplate" class="vanilla-pop-up-container">
-                <section id="VanillaGalleryTemplateExitButton" class="vanilla-pop-up-exit-button">
+            <div id="VanillaGalleryTemplate${this.templateId}" class="vanilla-pop-up-container">
+                <section id="VanillaGalleryTemplate${this.templateId}ExitButton" class="vanilla-pop-up-exit-button">
                     <svg viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
                         <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
                     </svg>
                 </section>
                 <div class="vanilla-gallery-template vanilla-pop-up-inner-center-template">
-                    <svg id="VanillaGalleryTemplateRemoveButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
+                    <svg id="VanillaGalleryTemplate${this.templateId}RemoveButton" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor">
                         <path d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"></path>
                     </svg>
-                    <div id="VanillaInnerSmallGallery">
-                        <img id="VanillaGalleryTemplateCurrentImage"/>
-                        <video id="VanillaGalleryTemplateCurrentVideo" controls></video>
+                    <div id="VanillaInnerSmallGallery${this.templateId}">
+                        <img id="VanillaGalleryTemplate${this.templateId}CurrentImage"/>
+                        <video id="VanillaGalleryTemplate${this.templateId}CurrentVideo" controls></video>
                     </div>
-                    <nav id="VanillaGalleryTemplateNav"></nav>
-                    <section id="VanillaGalleryTemplateNextButton"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></section>
-                    <section id="VanillaGalleryTemplatePrevButton"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></section>
-                    <div id="VanillaGalleryTemplateEmptyMessage" class="vanilla-gallery-template-empty-message">
+                    <nav id="VanillaGalleryTemplate${this.templateId}Nav"></nav>
+                    <section id="VanillaGalleryTemplate${this.templateId}NextButton"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></section>
+                    <section id="VanillaGalleryTemplate${this.templateId}PrevButton"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></section>
+                    <div id="VanillaGalleryTemplate${this.templateId}EmptyMessage" class="vanilla-gallery-template-empty-message">
                         <span>${ VanillaGalleryTemplate.emptyMessage }</span>
                     </div>
-                    <div id="VanillaGalleryTemplatePlaceHolder" class="vanilla-gallery-template-placeholder">
+                    <div id="VanillaGalleryTemplate${this.templateId}PlaceHolder" class="vanilla-gallery-template-placeholder">
                         <div class="vanilla-gallery-template-progress loader-dual-ring"><div></div><div></div><div></div></div>
                     </div>
                 </div>
@@ -51,17 +52,17 @@ export default class VanillaGalleryTemplate extends HTMLElement {
     }
 
     setEvents() {
-        let VanillaGalleryTemplateNextButton = document.getElementById("VanillaGalleryTemplateNextButton");
+        let VanillaGalleryTemplateNextButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "NextButton");
         if(VanillaGalleryTemplateNextButton != null) {
             VanillaGalleryTemplateNextButton.addEventListener('click', () => { if(!this.changing) this.currentIndex++ });
         }
 
-        let VanillaGalleryTemplatePrevButton = document.getElementById("VanillaGalleryTemplatePrevButton");
+        let VanillaGalleryTemplatePrevButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "PrevButton");
         if(VanillaGalleryTemplatePrevButton != null) {
             VanillaGalleryTemplatePrevButton.addEventListener('click', () => { if(!this.changing) this.currentIndex-- });
         }
 
-        let VanillaGalleryTemplateRemoveButton = document.getElementById("VanillaGalleryTemplateRemoveButton");
+        let VanillaGalleryTemplateRemoveButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "RemoveButton");
         if(VanillaGalleryTemplateRemoveButton != null) {
             VanillaGalleryTemplateRemoveButton.addEventListener('click', () => {
                 if(! this.canRemove) return;
@@ -70,7 +71,7 @@ export default class VanillaGalleryTemplate extends HTMLElement {
             });
         }
 
-        let VanillaGalleryTemplateExitButton = document.getElementById("VanillaGalleryTemplateExitButton");
+        let VanillaGalleryTemplateExitButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "ExitButton");
         if(VanillaGalleryTemplateExitButton != null) {
             VanillaGalleryTemplateExitButton.addEventListener('click', () => {
                 this.close();
@@ -79,7 +80,7 @@ export default class VanillaGalleryTemplate extends HTMLElement {
     }
 
     open(index = null) {
-        let vanillaGalleryTemplate = document.getElementById('VanillaGalleryTemplate');
+        let vanillaGalleryTemplate = document.getElementById('VanillaGalleryTemplate' + this.templateId);
         if(vanillaGalleryTemplate == null) document.body.appendChild(this);
         this.style = "display: block !important";
         if(index != null) this.currentIndex = index;
@@ -193,8 +194,8 @@ export default class VanillaGalleryTemplate extends HTMLElement {
 
         this.checkIfCanRemove(blobsCount);
 
-        let VanillaGalleryTemplateCurrentImage = document.getElementById("VanillaGalleryTemplateCurrentImage");
-        let VanillaGalleryTemplateCurrentVideo = document.getElementById("VanillaGalleryTemplateCurrentVideo");
+        let VanillaGalleryTemplateCurrentImage = document.getElementById("VanillaGalleryTemplate" + this.templateId + "CurrentImage");
+        let VanillaGalleryTemplateCurrentVideo = document.getElementById("VanillaGalleryTemplate" + this.templateId + "CurrentVideo");
 
         if(this.images == null || this.currentIndex >= this.images.length) {
             VanillaGalleryTemplateCurrentImage.setAttribute("style", "display: none !important;");
@@ -229,7 +230,7 @@ export default class VanillaGalleryTemplate extends HTMLElement {
 
     resetNav(blobsCount) {
 
-        let VanillaGalleryTemplateNav = document.getElementById("VanillaGalleryTemplateNav");
+        let VanillaGalleryTemplateNav = document.getElementById("VanillaGalleryTemplate" + this.templateId + "Nav");
 
         if(VanillaGalleryTemplateNav == null) return;
         if(blobsCount <= 1) {
@@ -270,8 +271,8 @@ export default class VanillaGalleryTemplate extends HTMLElement {
     }
 
     resetNextAndPrevButtonDisplay(blobsCount) {
-        let VanillaGalleryTemplateNextButton = document.getElementById("VanillaGalleryTemplateNextButton");
-        let VanillaGalleryTemplatePrevButton = document.getElementById("VanillaGalleryTemplatePrevButton");
+        let VanillaGalleryTemplateNextButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "NextButton");
+        let VanillaGalleryTemplatePrevButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "PrevButton");
 
         if(VanillaGalleryTemplateNextButton == null || VanillaGalleryTemplatePrevButton == null) return;
         if(blobsCount <= 1) {
@@ -296,19 +297,19 @@ export default class VanillaGalleryTemplate extends HTMLElement {
     }
 
     startPlaceHolder() {
-        let VanillaGalleryTemplatePlaceHolder = document.getElementById("VanillaGalleryTemplatePlaceHolder");
+        let VanillaGalleryTemplatePlaceHolder = document.getElementById("VanillaGalleryTemplate" + this.templateId + "PlaceHolder");
         if(VanillaGalleryTemplatePlaceHolder != null) VanillaGalleryTemplatePlaceHolder.setAttribute("style", "display: block !important;");
     }
 
     stopPlaceHolder() {
         setTimeout(() => {
-            let VanillaGalleryTemplatePlaceHolder = document.getElementById("VanillaGalleryTemplatePlaceHolder");
+            let VanillaGalleryTemplatePlaceHolder = document.getElementById("VanillaGalleryTemplate" + this.templateId + "PlaceHolder");
             if(VanillaGalleryTemplatePlaceHolder != null) VanillaGalleryTemplatePlaceHolder.setAttribute("style", "");
         }, 300);
     }
 
     checkIfGalleryIsEmpty(blobsCount) {
-        let VanillaGalleryTemplateEmptyMessage = document.getElementById("VanillaGalleryTemplateEmptyMessage");
+        let VanillaGalleryTemplateEmptyMessage = document.getElementById("VanillaGalleryTemplate" + this.templateId + "EmptyMessage");
         if(VanillaGalleryTemplateEmptyMessage == null) return;
         if(blobsCount == 0) {
             VanillaGalleryTemplateEmptyMessage.setAttribute("style", "display: block !important;");
@@ -318,7 +319,7 @@ export default class VanillaGalleryTemplate extends HTMLElement {
     }
     
     checkIfCanRemove(blobsCount) {
-        let VanillaGalleryTemplateRemoveButton = document.getElementById("VanillaGalleryTemplateRemoveButton");
+        let VanillaGalleryTemplateRemoveButton = document.getElementById("VanillaGalleryTemplate" + this.templateId + "RemoveButton");
         if(VanillaGalleryTemplateRemoveButton == null) return;
         if(blobsCount == 0 || ! this.canRemove) {
             VanillaGalleryTemplateRemoveButton.setAttribute("style", "");

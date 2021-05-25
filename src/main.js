@@ -337,6 +337,7 @@ vanillaHeader.setAttribute('notifications', JSON.stringify([{
     url: ""
 }]));
 
+
 let post = new VanillaOpenPostTemplate(24, 13, [
         "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
         "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
@@ -351,8 +352,8 @@ let post = new VanillaOpenPostTemplate(24, 13, [
 );
 
 post.open();
-
-/*let vanillaAddPostTemplate = new VanillaAddPostTemplate(6, 1, null, false);
+/*
+let vanillaAddPostTemplate = new VanillaAddPostTemplate(6, 1, null, false, 12);
 
 vanillaAddPostTemplate.open().then((images, videos)=> {
     console.log("post");
