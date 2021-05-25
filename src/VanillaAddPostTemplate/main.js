@@ -195,6 +195,19 @@ export default class VanillaAddPostTemplate extends HTMLElement {
 
     reset() {
 
+        let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Content");
+        if(VanillaAddPostTemplateContent != null) {
+            VanillaAddPostTemplateContent.value = "";
+        }
+
+        let imageInput = document.getElementById(`VanillaAddPostTemplate${this.templateId}Images`);
+        let videoInput = document.getElementById(`VanillaAddPostTemplate${this.templateId}Videos`);
+
+        if(imageInput != null) imageInput.value = '';
+        if(videoInput != null) videoInput.value = '';
+
+        this.gallery.clear();
+
         let VanillaAddPostTemplateCategories = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Categories");
         if(VanillaAddPostTemplateCategories != null) {
             if(! Array.isArray(this.categories)) {
@@ -213,13 +226,6 @@ export default class VanillaAddPostTemplate extends HTMLElement {
                 VanillaAddPostTemplateCategories.appendChild(option);
             }
         }
-
-        let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Content");
-        if(VanillaAddPostTemplateContent != null) {
-            VanillaAddPostTemplateContent.textContent = "";
-        }
-
-        this.gallery.clear();
     }
     
     open() {        

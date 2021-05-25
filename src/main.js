@@ -338,7 +338,7 @@ vanillaHeader.setAttribute('notifications', JSON.stringify([{
 }]));
 
 
-let post = new VanillaOpenPostTemplate(24, 13, [
+/*let post = new VanillaOpenPostTemplate(24, 13, [
         "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
         "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png",
         "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
@@ -351,15 +351,28 @@ let post = new VanillaOpenPostTemplate(24, 13, [
     ,'just now', 1, true, 200, "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", ''
 );
 
-post.open();
-/*
-let vanillaAddPostTemplate = new VanillaAddPostTemplate(6, 1, null, false, 12);
+post.open();*/
 
-vanillaAddPostTemplate.open().then((images, videos)=> {
-    console.log("post");
-}).catch(() => {
-    console.log("exit");
-});*/
+let temp = document.createElement('button');
+
+temp.setAttribute('style', 'width : 100px; height: 100px; background-color: red');
+document.body.appendChild(temp);
+
+let vanillaAddPostTemplate = new VanillaAddPostTemplate(6, 1, [
+    'type 1',
+    'type 2',
+    'type 3'
+], false, 12);
+
+temp.addEventListener('click', () => {
+    vanillaAddPostTemplate.open().then((images, videos)=> {
+        console.log("post");
+    }).catch(() => {
+        console.log("exit");
+    });
+});
+
+
 
 //vanillaNotifications.open();
 
