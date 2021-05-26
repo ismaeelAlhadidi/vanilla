@@ -12,10 +12,10 @@ export default class VanillaHeader extends HTMLElement {
     static logoutUrl = "";
 
     static get observedAttributes() {
-        return ['picture', 'notifications', 'categories', 'username'];
+        return ['picture', 'notifications', 'categories', 'username', 'logo'];
     }
 
-    constructor () {
+    constructor (logo = null) {
         super();
         // create two elements //
         this.vanillaCategoriesList = new VanillaList(0, "categories");
@@ -25,13 +25,17 @@ export default class VanillaHeader extends HTMLElement {
         ]);
         this.vanillaUserList.setAttribute("class", this.vanillaUserList.getAttribute("class") + " vanilla-header-user-list");
         this.vanillaNotifications = new VanillaNotifications();
+
+        this._profilePictureElement = null;
+
+        this._logo = logo;
     }
 
     connectedCallback() {
         this.innerHTML = `<div id="VanillaHeader" class="vanilla-header">
             <div class="vanilla-container">
                 
-                <section><img id="VanillaHeaderProfilePicture" src="${ VanillaHeader.defaultProfilePicture }"/></section>
+                <section><img id="VanillaHeaderProfilePicture" src="${ ( this.profilePicture == undefined || this.profilePicture == null ) ? VanillaHeader.defaultProfilePicture : this.profilePicture }"/></section>
                 
                 <div>
                     <section id="VanillaCategoriesListButton">
@@ -54,7 +58,7 @@ export default class VanillaHeader extends HTMLElement {
                     </section>
                 </div>
 
-                <div class="vanilla-header-logo"><a><img src="${ VanillaHeader.logo }"/></a></div>
+                <div class="vanilla-header-logo"><a><img id="VanillaHeaderLogo" src="${ ( this.logo == null || this.logo == undefined ) ? VanillaHeader.logo : this.logo }"/></a></div>
             </div>
         </div>`;
 
@@ -78,16 +82,20 @@ export default class VanillaHeader extends HTMLElement {
             this.vanillaCategoriesList.open();
         });
 
-        if(VanillaHeaderProfilePicture != null) VanillaHeaderProfilePicture.addEventListener('click', () => {
-            if(this.vanillaUserList.isOpend) {
+        if(VanillaHeaderProfilePicture != null) {
+            VanillaHeaderProfilePicture.addEventListener('click', () => {
+                if(this.vanillaUserList.isOpend) {
 
-                this.vanillaUserList.close();
-                return;
-            }
-            if(this.vanillaNotifications.isOpend && VanillaNotificationsButton != null) this.vanillaNotifications.close();
-            if(this.vanillaCategoriesList.isOpend && VanillaCategoriesListButton != null) this.vanillaCategoriesList.close();
-            this.vanillaUserList.open();
-        });
+                    this.vanillaUserList.close();
+                    return;
+                }
+                if(this.vanillaNotifications.isOpend && VanillaNotificationsButton != null) this.vanillaNotifications.close();
+                if(this.vanillaCategoriesList.isOpend && VanillaCategoriesListButton != null) this.vanillaCategoriesList.close();
+                this.vanillaUserList.open();
+            });
+            this._profilePictureElement = VanillaHeaderProfilePicture;
+            if ( this._profilePictureElement.src != this.profilePicture ) this.profilePicture = this.profilePicture;
+        }
 
         if(VanillaNotificationsButton != null) VanillaNotificationsButton.addEventListener('click', () => {
             if(this.vanillaNotifications.isOpend) {
@@ -126,13 +134,21 @@ export default class VanillaHeader extends HTMLElement {
         if(name == "username") {
             this.userName = newValue;
         }
+        if(name == "logo") {
+            this.logo = newValue;
+        }
     }
 
     get profilePicture() { return this._profilePicture; }
     set profilePicture(value) {
         if(value == null || value == undefined) return;
-        let VanillaHeaderProfilePicture = document.getElementById("VanillaHeaderProfilePicture");
-        if(VanillaHeaderProfilePicture != null) VanillaHeaderProfilePicture.src = value;
+
+        let profilePictureElement = this.profilePictureElement;
+
+        console.log(profilePictureElement);
+
+        if(profilePictureElement != null) profilePictureElement.src = value;
+
         this._profilePicture = value;
     }
 
@@ -176,6 +192,35 @@ export default class VanillaHeader extends HTMLElement {
         this.vanillaCategoriesList.list = valueAfterParsing;
     }
 
+    get profilePictureElement() {
+
+        if(this._profilePictureElement == null) {
+
+            if(this.children.length < 1) return null;
+
+            if(this.children[0].children.length < 1) return null;
+
+            if(this.children[0].children[0].children.length < 1) return null;
+
+            if(this.children[0].children[0].children[0].children.length < 1) return null;
+
+            this._profilePictureElement = this.children[0].children[0].children[0].children[0];
+        }
+
+
+        return this._profilePictureElement;
+    }
+
+
+    get logo () { return this._logo; }
+    set logo (value) {
+
+        let VanillaHeaderLogo = document.getElementById('VanillaHeaderLogo');
+
+        if(VanillaHeaderLogo != null) VanillaHeaderLogo.src = value;
+
+        this._logo = value;
+    }
 }
 
 window.customElements.define('vanilla-header', VanillaHeader);

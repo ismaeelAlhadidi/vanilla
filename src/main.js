@@ -11,6 +11,19 @@ import VanillaComments from "./VanillaComments/main";
 import VanillaLikesList from "./VanillaLikesList/main";
 import VanillaOpenPostTemplate from "./VanillaOpenPostTemplate/main";
 
+/*
+let vanillaHeader = new VanillaHeader();
+vanillaHeader.profilePicture = "https://homepages.cae.wisc.edu/~ece533/images/boat.png";
+vanillaHeader.userName = "Eman mohammad";
+vanillaHeader.vanillaCategoriesList.list = [
+    {text: 'abstract', url: ''}, {text: 'Caricature', url: ''},{text: 'cartoon', url: ''},
+    {text: 'decorative', url: ''},{text: 'raster', url: ''},{text: 'Portrait', url: ''},
+];
+*/
+
+//document.body.appendChild(vanillaHeader);
+
+
 const file = document.getElementById('inpuFile');
 var vanillaCropper = null;
 file.onchange = function () {
@@ -59,7 +72,7 @@ var vanillaNotifications = new VanillaNotifications();
 //vanillaGalleryTemplate.open(-1);
 
 let comments = document.getElementById('temp');
-comments.style = "display: none !important;";
+//comments.style = "display: none !important;";
 setTimeout(() => {
     comments.push({
         id: 1,
@@ -67,7 +80,7 @@ setTimeout(() => {
         time: "3 hours ago",
         userId: 3,
         userName: "mohammad al-hadidi",
-        userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+        userPicture: "https://homepages.cae.wisc.edu/~ece533/images/monarch.png",
         liked: false,
         likesCount: 10,
         replies: [
@@ -77,7 +90,7 @@ setTimeout(() => {
                 time: "3 hours ago",
                 userId: 3,
                 userName: "mohammad al-hadidi",
-                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/boat.png",
+                userPicture: "https://homepages.cae.wisc.edu/~ece533/images/monarch.png",
                 liked: false,
                 likesCount: 10
             },
@@ -317,9 +330,11 @@ vanillaList.add(5, 'null');
 //vanillaSmallGallery.addVideo("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4");
 
 // var vanillaAddPostTemplate = new VanillaAddPostTemplate(5);
-
+/*
 let vanillaHeader = document.getElementById('VanillaHeader').parentElement;
 
+vanillaHeader.profilePicture = "https://homepages.cae.wisc.edu/~ece533/images/boat.png";
+vanillaHeader.setAttribute('picture', "https://homepages.cae.wisc.edu/~ece533/images/boat.png");
 vanillaHeader.setAttribute('categories', JSON.stringify([
     {text: '1', url: 'null'},
     {text: '2', url: 'null'},
@@ -335,7 +350,7 @@ vanillaHeader.setAttribute('notifications', JSON.stringify([{
     time: "34 minutes ago",
     readed: !(1%3 ==  0),
     url: ""
-}]));
+}]));*/
 
 
 /*let post = new VanillaOpenPostTemplate(24, 13, [

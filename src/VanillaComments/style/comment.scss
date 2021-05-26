@@ -24,6 +24,7 @@ $commentProfilePictureSize: 43px;
             #{$nauralAlign}: 0;
             & > img {
                 width: $commentProfilePictureSize;
+                height: $commentProfilePictureSize;
                 border-radius: 50%;
                 border: $defaultBorder;
             }
@@ -158,6 +159,7 @@ $commentProfilePictureSize: 43px;
                 padding: $postCommentProfilePictureDivWidth/2-$postCommentProfilePictureSize/2;
                 & > img {
                     width: $postCommentProfilePictureSize;
+                    height: $postCommentProfilePictureSize;
                 }
             }
             &:nth-of-type(2) {
