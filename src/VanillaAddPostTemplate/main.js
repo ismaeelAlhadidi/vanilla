@@ -177,7 +177,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
 
                 let content = "";
                 let VanillaAddPostTemplateContent = document.getElementById("VanillaAddPostTemplate" + this.templateId + "Content");
-                if(VanillaAddPostTemplateContent != null) content = VanillaAddPostTemplateContent.textContent;
+                if(VanillaAddPostTemplateContent != null) content = VanillaAddPostTemplateContent.value;
 
                 let category = null;
                 if(Array.isArray(this.categories)) {
