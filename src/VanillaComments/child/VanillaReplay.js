@@ -14,6 +14,11 @@ export default class VanillaReplay extends HTMLElement {
         });
     }
 
+    static goToProfileCallBack(userId) {
+
+        console.log('go to user ' + userId);
+    }
+
     constructor (replay, templateId, profilePicture) {
         super();
         this.replay = replay;
@@ -30,7 +35,7 @@ export default class VanillaReplay extends HTMLElement {
         this.innerHTML =`
         <div id="Vanilla${ this.templateId }Replay${ this.replay.id }" class="vanilla-comment vanilla-replay">
             <div id="Vanilla${ this.templateId }Replay${ this.replay.id }Card">
-                <div><img src="${ this.replay.userPicture }"/></div>
+                <div><img id="Vanilla${ this.templateId }Replay${ this.replay.id }UserPicture" src="${ this.replay.userPicture }"/></div>
                 <div>
                     <div>
                         <span>${ this.replay.userName }</span>
@@ -94,6 +99,16 @@ export default class VanillaReplay extends HTMLElement {
         if(likesCount != null) {
             likesCount.addEventListener('click', () => {
                 this.vanillaPopup.likes(this.replay.id, 'Replay', 'likes list', null, true);
+            });
+        }
+
+        let UserPicture = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }UserPicture`);
+
+        if(UserPicture != null) {
+
+            UserPicture.addEventListener('click', () => {
+
+                VanillaReplay.goToProfileCallBack(this.replay.userId);
             });
         }
     }

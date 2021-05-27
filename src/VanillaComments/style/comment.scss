@@ -27,6 +27,7 @@ $commentProfilePictureSize: 43px;
                 height: $commentProfilePictureSize;
                 border-radius: 50%;
                 border: $defaultBorder;
+                cursor: pointer;
             }
         }
         &:nth-of-type(2) {

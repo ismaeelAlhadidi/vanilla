@@ -38,6 +38,11 @@ export default class VanillaComment extends HTMLElement {
         });
     }
 
+    static goToProfileCallBack(userId) {
+
+        console.log('go to user ' + userId);
+    }
+
     constructor (comment, templateId, profilePicture) {
         super();
         this.comment = comment;
@@ -56,7 +61,7 @@ export default class VanillaComment extends HTMLElement {
         this.innerHTML =`
         <div id="Vanilla${ this.templateId }Comment${ this.comment.id }" class="vanilla-comment">
             <div id="Vanilla${ this.templateId }Comment${ this.comment.id }Card">
-                <div><img src="${ this.comment.userPicture }"/></div>
+                <div><img id="Vanilla${ this.templateId }Comment${ this.comment.id }UserPicture" src="${ this.comment.userPicture }"/></div>
                 <div>
                     <div>
                         <span>${ this.comment.userName }</span>
@@ -182,6 +187,16 @@ export default class VanillaComment extends HTMLElement {
                 this.vanillaPopup.likes(this.comment.id, 'Comment', 'likes list', null, true);
             });
         }
+
+        let UserPicture = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }UserPicture`);
+
+        if(UserPicture != null) {
+
+            UserPicture.addEventListener('click', () => {
+
+                VanillaComment.goToProfileCallBack(this.comment.userId);
+            });
+        }
     }
 
     setLiked() {
@@ -247,6 +262,8 @@ export default class VanillaComment extends HTMLElement {
         if(typeof reply !== 'object' || reply === null) return;
 
         if(! reply.hasOwnProperty("id")) return;
+
+        if(this.replies.has(reply.id)) return;
 
         this.replies.set(reply.id, new VanillaReplay(reply, this.templateId, this.profilePicture));
 

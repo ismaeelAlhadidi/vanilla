@@ -140,6 +140,8 @@ export default class VanillaComments extends HTMLElement {
 
         if(! comment.hasOwnProperty("id")) return;
 
+        if(this.comments.has(comment.id)) return;
+
         this.comments.set(comment.id, new VanillaComment(comment, this.templateId, this.profilePicture));
 
         let VanillaCommentsInnerTemplate = document.getElementById(`VanillaComments${ this.templateId }InnerTemplate`);
