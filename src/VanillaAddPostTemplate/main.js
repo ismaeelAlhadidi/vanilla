@@ -188,7 +188,7 @@ export default class VanillaAddPostTemplate extends HTMLElement {
                 }
 
                 this.close();
-                this.postCallBack(this.gallery.images, this.gallery.videos, content, category);
+                this.postCallBack({ images: this.gallery.images, videos: this.gallery.videos, content: content, category: category });
             });
         }
     }

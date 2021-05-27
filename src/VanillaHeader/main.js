@@ -145,8 +145,6 @@ export default class VanillaHeader extends HTMLElement {
 
         let profilePictureElement = this.profilePictureElement;
 
-        console.log(profilePictureElement);
-
         if(profilePictureElement != null) profilePictureElement.src = value;
 
         this._profilePicture = value;
