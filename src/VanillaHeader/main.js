@@ -10,6 +10,7 @@ export default class VanillaHeader extends HTMLElement {
     static defaultProfilePicture = "https://homepages.cae.wisc.edu/~ece533/images/airplane.png";
     static profileUrl = "";
     static logoutUrl = "";
+    static logoUrl = null;
 
     static get observedAttributes() {
         return ['picture', 'notifications', 'categories', 'username', 'logo'];
@@ -58,7 +59,7 @@ export default class VanillaHeader extends HTMLElement {
                     </section>
                 </div>
 
-                <div class="vanilla-header-logo"><a><img id="VanillaHeaderLogo" src="${ ( this.logo == null || this.logo == undefined ) ? VanillaHeader.logo : this.logo }"/></a></div>
+                <div class="vanilla-header-logo"><a href="${ ( VanillaHeader.logoUrl == null ? '#' : VanillaHeader.logoUrl ) }"><img id="VanillaHeaderLogo" src="${ ( this.logo == null || this.logo == undefined ) ? VanillaHeader.logo : this.logo }"/></a></div>
             </div>
         </div>`;
 

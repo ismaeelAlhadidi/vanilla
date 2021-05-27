@@ -39,6 +39,28 @@ export default class VanillaComments extends HTMLElement {
         });
     };
 
+    static fetchCommentsCallBack = (commentsUrl) => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let comment = {
+                    id: VanillaComments.i,
+                    content: 'comment from fetchCommentsCallBack',
+                    time: 'just now',
+                    userId: 1,
+                    userName: 'Esmaeel al-hadidi',
+                    userPicture: ' https://homepages.cae.wisc.edu/~ece533/images/boat.png',
+                    liked: false,
+                    likesCount: 10,
+                    replies: []
+                };
+                VanillaComments.i++;
+                let comments = [ comment ];
+                resolve(comments);
+            }, 1000);
+        });
+    };
+
     static get observedAttributes() {
         return ['templateid', 'postid', 'width', 'heigth', 'picture', 'fetch'];
     }
@@ -244,16 +266,14 @@ export default class VanillaComments extends HTMLElement {
     fetchComments(commentsUrl) {
         this.addPlaceHolders(5);
 
-        fetch(commentsUrl).then((resutl)=> {
+        VanillaComments.fetchCommentsCallBack(commentsUrl).then((comments)=> {
 
-            setTimeout(() => {
-                this.removePlaceHolders();
-            }, 1000);
-        }).catch(() => {
+            this.removePlaceHolders();
+            this.pushAll(comments);
+        }).catch((message) => {
 
-            setTimeout(() => {
-                this.removePlaceHolders();
-            }, 1000);
+            this.removePlaceHolders();
+            this.vanillaPopup.alert("fetch comment faild", message, "ok");
         });
 
     }
