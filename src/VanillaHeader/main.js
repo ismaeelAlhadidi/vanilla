@@ -21,7 +21,7 @@ export default class VanillaHeader extends HTMLElement {
         // create two elements //
         this.vanillaCategoriesList = new VanillaList(0, "categories");
         this.vanillaUserList = new VanillaList(1, this.userName, [
-            { text: 'view profile', url: VanillaList.profileUrl },
+            { text: 'view profile', url: VanillaHeader.profileUrl },
             { text: 'logout', url: VanillaHeader.logoutUrl }
         ]);
         this.vanillaUserList.setAttribute("class", this.vanillaUserList.getAttribute("class") + " vanilla-header-user-list");
