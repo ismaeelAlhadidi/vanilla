@@ -1,3 +1,4 @@
+import VanillaPopup from "../../VanillaPopup/main";
 import "./../style/like.scss";
 
 export default class VanillaLike extends HTMLElement {
