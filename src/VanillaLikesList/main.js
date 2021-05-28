@@ -231,7 +231,7 @@ export default class VanillaLikesList extends VanillaList {
 
     fetchListFrom(callBack) {
 
-        callBack(this.commponentId, this.componentType).then((result) => {
+        callBack(this.componentId, this.componentType).then((result) => {
 
             this.list = result;
 
