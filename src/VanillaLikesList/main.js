@@ -42,6 +42,15 @@ export default class VanillaLikesList extends VanillaList {
         });
     };
 
+    static toggleFollowCallBack = (userId) => {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([]);
+            }, 1000);
+        });
+    };
+
     constructor (componentId, componentType, title, list = null, type = 'likes', autoFetch = false) {
 
         super("Likes" + componentType + componentId, title, list);
@@ -148,11 +157,11 @@ export default class VanillaLikesList extends VanillaList {
         
         if(VanillaListInnerTemplate == null) return;
 
-        if(this.type == 'likes') VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, like));
+        if(this.type == 'likes') VanillaListInnerTemplate.appendChild(new VanillaLike(this.id, like, VanillaLikesList.toggleFollowCallBack));
 
-        else if(this.type == 'following') VanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, like));
+        else if(this.type == 'following') VanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, like, VanillaLikesList.toggleFollowCallBack));
 
-        else VanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, like));
+        else VanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, like, VanillaLikesList.toggleFollowCallBack));
 
         this.list.push(like);
     }
@@ -187,21 +196,21 @@ export default class VanillaLikesList extends VanillaList {
         if(this.type == 'likes') {
             for(let i = 0; i < this.list.length; i++) {
 
-                newVanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i]));
+                newVanillaListInnerTemplate.appendChild(new VanillaLike(this.id, this.list[i], VanillaLikesList.toggleFollowCallBack));
             }
         }
 
         else if(this.type == 'following') {
             for(let i = 0; i < this.list.length; i++) {
 
-                newVanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, this.list[i]));
+                newVanillaListInnerTemplate.appendChild(new VanillaFollowing(this.id, this.list[i], VanillaLikesList.toggleFollowCallBack));
             }
         }
 
         else if(this.type == 'follower') {
             for(let i = 0; i < this.list.length; i++) {
 
-                newVanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, this.list[i]));
+                newVanillaListInnerTemplate.appendChild(new VanillaFollower(this.id, this.list[i], VanillaLikesList.toggleFollowCallBack));
             }
         }
 

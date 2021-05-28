@@ -11,9 +11,9 @@ export default class VanillaPopup {
 
     following(userId, componentType, title, list, autoFetch = false) {
 
-        if(! Array.isArray(list)) return;
+        if(! autoFetch && ! Array.isArray(list)) return;
 
-        if(list.length == 0) return;
+        if(! autoFetch && list.length == 0) return;
 
         let likes = new VanillaLikes(userId, componentType, title, list, 'following', autoFetch);
 
