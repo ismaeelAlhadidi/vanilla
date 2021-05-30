@@ -394,10 +394,10 @@ temp.addEventListener('click', () => {
 // vanillaNotifications.addPlaceHolders();
 
 //vanillaNotifications.removePlaceHolders();
-/*
 
+let header = document.getElementById('VanillaHeader').parentElement;
 for(let i = 0; i < 20; i++) {
-    vanillaNotifications.push(
+    header.vanillaNotifications.push(
         i,
         "mohammad ahmmad al-hadidi commented today on your new last bad post you publish it before three years",
         "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
@@ -405,7 +405,7 @@ for(let i = 0; i < 20; i++) {
         !(i%3 ==  0),
         () => console.log("hi from notification " + i)
     );
-}*/
+}
 //vanillaNotifications.removePlaceHolders();
 
 /*

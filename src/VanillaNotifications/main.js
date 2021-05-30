@@ -7,12 +7,14 @@ export default class VanillaNotifications extends HTMLElement {
     static title = "Notifications";
     static emptyMessage = "no Notifications now";
 
-    constructor () {
+    constructor (unReadedChangedCallBack = null) {
         super();
 
         this.notifications = new Map();
 
-        this.unReadedCount = 0;
+        this._unReadedCount = 0;
+
+        this.unReadedChangedCallBack = unReadedChangedCallBack;
 
         /* for fetch */
         this.url = null;
@@ -270,6 +272,12 @@ export default class VanillaNotifications extends HTMLElement {
                 }
             }
         }
+    }
+
+    get unReadedCount() { return this._unReadedCount; }
+    set unReadedCount(value) {
+        this._unReadedCount = value;
+        if(this.unReadedChangedCallBack != null) this.unReadedChangedCallBack(value);
     }
 }
 window.customElements.define('vanilla-notifications', VanillaNotifications);

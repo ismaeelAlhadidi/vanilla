@@ -31,6 +31,25 @@ $iconSectionWidth: 105px;
                 color: inherit;
             }
         }
+        .vanilla-alert-count {
+            position: absolute;
+            width: $defaultFontSize*1.1;
+            height: $defaultFontSize*1.1;
+            background-color: red;
+            border-radius: 50%;
+            top: 0;
+            #{$nauralReverseAlign}: 0;
+            span {
+                display: block;
+                width: auto;
+                height: auto;
+                font-size: $defaultFontSize/1.4;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
     }
     span {
         height: 40%;

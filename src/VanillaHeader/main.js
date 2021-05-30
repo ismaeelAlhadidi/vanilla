@@ -25,7 +25,7 @@ export default class VanillaHeader extends HTMLElement {
             { text: 'logout', url: VanillaHeader.logoutUrl }
         ]);
         this.vanillaUserList.setAttribute("class", this.vanillaUserList.getAttribute("class") + " vanilla-header-user-list");
-        this.vanillaNotifications = new VanillaNotifications();
+        this.vanillaNotifications = new VanillaNotifications(this.unReadedChangedCallBack);
 
         this._profilePictureElement = null;
 
@@ -49,6 +49,7 @@ export default class VanillaHeader extends HTMLElement {
                     </section>
                     <section id="VanillaNotificationsButton">
                         <div>
+                            <span class="vanilla-alert-count"><span id="VanillaHeaderUnReadedNotificationsCount">9+</span></span>
                             <svg>
                                 <path fill="currentColor" d="M21.4 17L20.7 15.6L5.2 12.2L4 13.1C3 13.9 2.4 14.7 2.2 15.6L2 16.6L21.7 21L21.9 20C22 19.7 22 19.5 22 19.2C22 18.5 21.8 17.8 21.4 17Z"></path>
                                 <path fill="currentColor" d="M20.5 8.8C20.8 5.7 18.7 2.8 15.6 2.1C15.1 2 14.6 2 14.2 2C11.6 2 9.19999 3.6 8.29999 6.1L6.29999 11.4L20.1 14.5L20.5 8.8Z"></path>
@@ -107,7 +108,34 @@ export default class VanillaHeader extends HTMLElement {
             if(this.vanillaCategoriesList.isOpend && VanillaCategoriesListButton != null) this.vanillaCategoriesList.close();
             if(this.vanillaUserList.isOpend && VanillaHeaderProfilePicture != null) this.vanillaUserList.close();
             this.vanillaNotifications.open();
+            this.setAllNotificationsReaded();
         });
+    }
+
+    setAllNotificationsReaded() {
+        
+        this.vanillaNotifications.unReadedCount = 0;
+    }
+
+    unReadedChangedCallBack(value) {
+
+        let unReadedNotificationsCount = document.getElementById('VanillaHeaderUnReadedNotificationsCount');
+
+        if(unReadedNotificationsCount == null) return;
+
+        if(value <= 0) {
+
+            unReadedNotificationsCount.textContent = '0';
+
+            if(unReadedNotificationsCount.parentElement != undefined) unReadedNotificationsCount.parentElement.setAttribute('style', 'display: none !important;');
+
+            return;
+        }
+
+        unReadedNotificationsCount.textContent = ( value < 10 ? value : '+9');
+
+        if(unReadedNotificationsCount.parentElement != undefined) unReadedNotificationsCount.parentElement.setAttribute('style', 'display: block !important;');
+
     }
 
     setAttributes () {
