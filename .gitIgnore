@@ -1,2 +1,5 @@
 /node_modules
 /dist
+/src/main.js
+/src/main.scss
+/src/main.html
