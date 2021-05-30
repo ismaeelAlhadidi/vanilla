@@ -239,7 +239,7 @@ export default class VanillaNotifications extends HTMLElement {
             }
             if(! this.haveMore) return;
             this.page++;
-            url += "?page=" + this.page;
+            url += ( url.lastIndexOf('?') == -1 ? '?' : '&' ) +"page=" + this.page;
             if(notificationsCountInOneFetch != null) this.notificationsCountInOneFetch = notificationsCountInOneFetch;
         }
         if(this.page != 1) placeHoldersCount = 2;
