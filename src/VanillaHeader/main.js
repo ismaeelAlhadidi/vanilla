@@ -66,6 +66,7 @@ export default class VanillaHeader extends HTMLElement {
 
         this.setAttributes();
         this.setEvents();
+        this.setUnReadedNotificationsCount();
     }
 
     setEvents() {
@@ -110,6 +111,11 @@ export default class VanillaHeader extends HTMLElement {
             this.vanillaNotifications.open();
             this.setAllNotificationsReaded();
         });
+    }
+
+    setUnReadedNotificationsCount() {
+        
+        this.unReadedChangedCallBack(this.vanillaNotifications.unReadedCount);
     }
 
     setAllNotificationsReaded() {
