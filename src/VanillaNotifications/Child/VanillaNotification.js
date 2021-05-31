@@ -4,7 +4,7 @@ export default class VanillaNotification extends HTMLElement {
 
     static maxContentSize = 75;
 
-    constructor (id, content, image, time, readed, clickHandler = null) {
+    constructor (id, content, image, time, readed, opend, clickHandler = null) {
         super();
         this.id = id;
         this._content = content;
@@ -12,10 +12,11 @@ export default class VanillaNotification extends HTMLElement {
         this._time = time;
         this._readed = readed;
         this._clickHandler = clickHandler;
+        this._opend = opend;
     }
 
     connectedCallback() {
-        this.innerHTML = `<div id="VanillaNotification${ this.id }" class="vanilla-notification${( this.readed ? "" : " vanilla-notification-not-readed")}">
+        this.innerHTML = `<div id="VanillaNotification${ this.id }" class="vanilla-notification${( this.opend ? "" : " vanilla-notification-not-opend")}">
             <div><img id="VanillaNotification${ this.id }Image" src="${ this.image }"/></div>
             <div>
                 <p id="VanillaNotification${ this.id }Content">${ this.transformContent(this.content) }</p>
@@ -66,9 +67,15 @@ export default class VanillaNotification extends HTMLElement {
 
     get readed () { return this._readed; }
     set readed (value) {
-        let notificationElement = document.getElementById("VanillaNotification" + this.id);
-        if(notificationElement != null) notificationElement.setAttribute("class", "vanilla-notification" + ( value ? "" : " vanilla-notification-not-readed" ));
+        
         this._readed = value;
+    }
+
+    get opend () { return this._opend; }
+    set opend (value) {
+        let notificationElement = document.getElementById("VanillaNotification" + this.id);
+        if(notificationElement != null) notificationElement.setAttribute("class", "vanilla-notification" + ( value ? "" : " vanilla-notification-not-opend" ));
+        this._opend = value;
     }
 
     get clickHandler () { return this._clickHandler; }

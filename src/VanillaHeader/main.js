@@ -12,6 +12,10 @@ export default class VanillaHeader extends HTMLElement {
     static logoutUrl = "";
     static logoUrl = null;
 
+    static readAllUnReadedNotificationsCallBack = (unReadedIds) => {
+
+    }
+
     static get observedAttributes() {
         return ['picture', 'notifications', 'categories', 'username', 'logo'];
     }
@@ -121,6 +125,10 @@ export default class VanillaHeader extends HTMLElement {
     setAllNotificationsReaded() {
         
         this.vanillaNotifications.unReadedCount = 0;
+
+        VanillaHeader.readAllUnReadedNotificationsCallBack(this.vanillaNotifications.unReadedIds);
+
+        this.vanillaNotifications.unReadedIds = [];
     }
 
     unReadedChangedCallBack(value) {

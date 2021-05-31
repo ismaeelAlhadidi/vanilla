@@ -21,6 +21,7 @@ export default class VanillaNotifications extends HTMLElement {
         this.page = null;
         this.haveMore = false;
         this.fetching = false;
+        this.unReadedIds = [];
     }
 
     connectedCallback() {
@@ -50,7 +51,7 @@ export default class VanillaNotifications extends HTMLElement {
         }
     }
 
-    push(id, content, image, time, readed, clickHandler) {
+    push(id, content, image, time, readed, opend, clickHandler, addInFirst = true) {
 
         if(this.notifications.has(id)) return;
 
@@ -60,18 +61,22 @@ export default class VanillaNotifications extends HTMLElement {
         }
         innerNotificationsTemplate = document.getElementById('VanillaInnerNotificationsTemplate');
 
-        let notification = new VanillaNotification(id, content, image, time, readed, clickHandler);
+        let notification = new VanillaNotification(id, content, image, time, readed, opend, clickHandler);
         
         this.notifications.set(id, notification);
 
-        if(! readed) this.unReadedCount++;
+        if(! readed) {
+
+            this.unReadedIds.push(id);
+            this.unReadedCount++;
+        }
 
         let emptyMessage = document.getElementById('VanillNotificationsEmptyMessage');
         if(emptyMessage != null) {
             innerNotificationsTemplate.removeChild(emptyMessage);
         }
 
-        if(innerNotificationsTemplate.children.length > 0) {
+        if(addInFirst && ( innerNotificationsTemplate.children.length > 0 ) ) {
 
             innerNotificationsTemplate.insertBefore(notification, innerNotificationsTemplate.firstChild);
             return;
@@ -151,18 +156,21 @@ export default class VanillaNotifications extends HTMLElement {
         this.isOpend = false;
     }
 
-    pushAll(data) {
+    pushAll(data, addInFirst = true) {
         if(! Array.isArray(data)) return;
         data.forEach(notification => {
             let clickHandler = () => {
                 document.location.assign(notification.url);
             };
-            this.push(
+            this.push (
                 notification.id,
                 notification.content,
                 notification.image,
                 notification.time,
-                clickHandler
+                notification.readed,
+                notification.opend,
+                clickHandler,
+                addInFirst
             );
         });
     }
@@ -249,33 +257,39 @@ export default class VanillaNotifications extends HTMLElement {
             headers,
             body
         }).then((response) => { return response.json(); }).then((result) => {
+
             if(result.status) {
 
-                this.pushAll(result.data);
-                if(result.data.length < this.notificationsCountInOneFetch) {
-                    this.haveMore = false;
-                }
-                this.fetching = false;
+                this.pushAll(result.data, false);
+
+                if(result.data.length == 0) this.haveMore = false;
             }
+            this.fetching = false;
             this.removePlaceHolders();
         }).catch(() => {
+
+            this.fetching = false;
             this.removePlaceHolders();
         });
     }
 
-    onScroll(event) {
-        if(! this.fetching) {
-            if(event.target.scrollHeight - ( event.target.offsetHeight + event.target.scrollTop ) < 50) {
-                this.fetching = true;
-                if(this.haveMore) {
-                    this.fetchNotificationsFromApi(this.url, this.method, this.headers, this.body, true);
-                }
-            }
-        }
+    onScroll = (event) => {
+
+        if(this.fetching) return;
+
+        if(! ( event.target.scrollHeight - ( event.target.offsetHeight + event.target.scrollTop ) < 50 ) ) return;
+        
+        if(! this.haveMore) return;
+
+        this.fetching = true;
+
+        this.fetchNotificationsFromApi(this.url, this.method, this.headers, this.body, true);
+
     }
 
     get unReadedCount() { return this._unReadedCount; }
     set unReadedCount(value) {
+
         this._unReadedCount = value;
         if(this.unReadedChangedCallBack != null) this.unReadedChangedCallBack(value);
     }
