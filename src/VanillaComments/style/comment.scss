@@ -48,12 +48,17 @@ $commentProfilePictureSize: 43px;
                     }
                 }
             }
-            & > p {
+            & > .vanilla-comment-content {
                 margin: 0;
                 padding: $defaultFontSize*0.5;
                 padding-#{$nauralAlign}: $defaultFontSize;
                 color: $defaultLessWiteTextColor;
                 line-height: 1.5*$defaultLineHeight;
+                & > span {
+                    @extend %no-select;
+                    color: $styleColor;
+                    cursor: pointer;
+                }
             }
         }
         &:nth-of-type(3) {

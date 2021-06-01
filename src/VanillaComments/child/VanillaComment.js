@@ -9,6 +9,10 @@ export default class VanillaComment extends HTMLElement {
     static postReplyButtonText = "Post";
     static replyInputPlaceHolder = "write reply ...";
 
+    static maxContentLength = 200;
+    static seeMoreMessage = "see more";
+    static seeLessMessage = "see less"
+
     static i = 1000;
     static postReplayCallBack(commentId, content) {
 
@@ -55,6 +59,8 @@ export default class VanillaComment extends HTMLElement {
         this.replyOpend = false;
 
         this.vanillaPopup = new VanillaPopup();
+
+        this._content = this.comment.content;
     }
 
     connectedCallback() {
@@ -67,7 +73,7 @@ export default class VanillaComment extends HTMLElement {
                         <span>${ this.comment.userName }</span>
                         <span>${ this.comment.time }</span>
                     </div>
-                    <p>${ this.comment.content }</p>
+                    <p id="Vanilla${ this.templateId }Comment${ this.comment.id }seeMoreButton" class="vanilla-comment-content">${ this.content }</p>
                 </div>
                 <div>X</div>
                 <footer><div id="Vanilla${ this.templateId }Comment${ this.comment.id }OpenReplies">
@@ -179,6 +185,10 @@ export default class VanillaComment extends HTMLElement {
 
                 });
             });
+            
+            let contentDiv = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }seeMoreButton`);
+
+            if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
         }
 
         let likesCount = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }LikesCount`);
@@ -265,7 +275,7 @@ export default class VanillaComment extends HTMLElement {
 
         if(this.replies.has(reply.id)) return;
 
-        this.replies.set(reply.id, new VanillaReplay(reply, this.templateId, this.profilePicture));
+        this.replies.set(reply.id, new VanillaReplay(reply, this.templateId, this.profilePicture, this));
 
         let VanillaCommentReplies = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }Replies`);
         
@@ -370,11 +380,69 @@ export default class VanillaComment extends HTMLElement {
         return approximateHeight+"px";
     }
 
+    refreshRepliesHeigth() {
+
+        let replies = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }Replies`);
+
+        if( replies == null ) return;
+
+        let height = this.getRepliesApproximateHeight();
+
+        replies.setAttribute('style', 'height: ' + height +' !important;');
+    }
+
+    seeMoreButtonHandler = () => {
+
+        let contentDiv = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }seeMoreButton`);
+
+        if(contentDiv == null) return;
+
+        contentDiv.innerHTML = `${this._content} <span>${VanillaComment.seeLessMessage}</span>`;
+
+        if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', () => {
+            contentDiv.innerHTML = `
+                ${ this.content }
+            `;
+            if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
+        });
+    }
+
+    contentSizeIsValid = () => {
+
+        return this._content.length > VanillaComment.maxContentLength ? false : true;
+    }
+
     get profilePicture() { return this._profilePicture; }
     set profilePicture(value) {
         let profilePicture =  document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }ProfilePicture`);
         if(profilePicture != null) profilePicture.src = value;
         this._profilePicture = value;
+    }
+
+    get content () {
+
+        let content = this._content
+
+        if(! this.contentSizeIsValid()) {
+
+
+            content = content.substr(0, VanillaComment.maxContentLength)
+                + ` <span>` + VanillaComment.seeMoreMessage + "</span>";
+
+            let contentDiv = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }seeMoreButton`);
+
+            if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
+        }
+
+        return content;
+    }
+    set content (value) {
+
+        this._content = content;
+
+        let contentDiv = document.getElementById(`Vanilla${ this.templateId }Comment${ this.comment.id }seeMoreButton`);
+
+        if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
     }
 }
 

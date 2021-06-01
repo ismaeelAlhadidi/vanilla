@@ -3,6 +3,10 @@ import "./../style/comment.scss";
 
 export default class VanillaReplay extends HTMLElement {
 
+    static maxContentLength = 200;
+    static seeMoreMessage = "see more";
+    static seeLessMessage = "see less"
+
 
     static toggleLike = (replyId) => {
 
@@ -19,7 +23,7 @@ export default class VanillaReplay extends HTMLElement {
         console.log('go to user ' + userId);
     }
 
-    constructor (replay, templateId, profilePicture) {
+    constructor (replay, templateId, profilePicture, commentElement = null) {
         super();
         this.replay = replay;
         this.templateId = templateId;
@@ -28,6 +32,11 @@ export default class VanillaReplay extends HTMLElement {
 
 
         this.vanillaPopup = new VanillaPopup();
+
+        
+        this._content = this.replay.content;
+
+        this.commentElement = commentElement;
     }
 
 
@@ -41,7 +50,7 @@ export default class VanillaReplay extends HTMLElement {
                         <span>${ this.replay.userName }</span>
                         <span>${ this.replay.time }</span>
                     </div>
-                    <p>${ this.replay.content }</p>
+                    <p id="Vanilla${ this.templateId }Replay${ this.replay.id }seeMoreButton" class="vanilla-comment-content">${ this.content }</p>
                 </div>
                 <div>X</div>
                 <footer><div>
@@ -93,6 +102,9 @@ export default class VanillaReplay extends HTMLElement {
 
                 });
             });
+            let contentDiv = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }seeMoreButton`);
+
+            if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
         }
 
         let likesCount = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }LikesCount`);
@@ -155,6 +167,32 @@ export default class VanillaReplay extends HTMLElement {
         }
     */
 
+        seeMoreButtonHandler = () => {
+
+            let contentDiv = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }seeMoreButton`);
+    
+            if(contentDiv == null) return;
+    
+            contentDiv.innerHTML = `${this._content} <span>${VanillaReplay.seeLessMessage}</span>`;
+    
+            if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', () => {
+                contentDiv.innerHTML = `
+                    ${ this.content }
+                `;
+
+                if(this.commentElement != null) this.commentElement.refreshRepliesHeigth();
+
+                if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
+            });
+
+            if(this.commentElement != null) this.commentElement.refreshRepliesHeigth();
+        }
+    
+        contentSizeIsValid = () => {
+    
+            return this._content.length > VanillaReplay.maxContentLength ? false : true;
+        }
+    
     
     get profilePicture() { return this._profilePicture; }
     set profilePicture(value) {
@@ -163,6 +201,31 @@ export default class VanillaReplay extends HTMLElement {
         this._profilePicture = value;
     }
 
+    get content () {
+
+        let content = this._content
+
+        if(! this.contentSizeIsValid()) {
+
+
+            content = content.substr(0, VanillaReplay.maxContentLength)
+                + ` <span>` + VanillaReplay.seeMoreMessage + "</span>";
+
+            let contentDiv = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }seeMoreButton`);
+
+            if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
+        }
+
+        return content;
+    }
+    set content (value) {
+
+        this._content = content;
+
+        let contentDiv = document.getElementById(`Vanilla${ this.templateId }Replay${ this.replay.id }seeMoreButton`);
+
+        if(contentDiv != null) if(contentDiv.children.length == 1) contentDiv.children[0].addEventListener('click', this.seeMoreButtonHandler);
+    }
 }
 
 window.customElements.define('vanilla-reply', VanillaReplay);
