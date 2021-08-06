@@ -2,6 +2,8 @@ import VanillaComments from "../VanillaComments/main";
 import VanillaGalleryTemplate from "../VanillaGalleryTemplate/main";
 import VanillaPopup from "../VanillaPopup/main";
 import VanillaSmallGallery from "../VanillaSmallGallery/main";
+import { Manager } from "socket.io-client";
+
 import "./main.scss";
 
 export default class VanillaOpenPostTemplate extends HTMLElement {
@@ -10,6 +12,12 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
     static maxContentLength = 100;
     static seeMoreMessage = "see more";
     static seeLessMessage = "see less";
+
+    static withSocketIo = false;
+    static socketIoUrl = "";
+    static reconnectionDelayMax = 10000;
+    static socketsManager = null;
+    static socketIoNameSpace = "";
 
     static toggleLike = (postId) => {
 
@@ -21,7 +29,7 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
         });
     }
 
-    constructor(templateId, postId, images, videos, content, time, likesCount, isLiked, commentsCount, profilePicture, commentsUrl) {
+    constructor(templateId, postId, images, videos, content, time, likesCount, isLiked, commentsCount, profilePicture, commentsUrl, authTokenForSocket) {
         super();
 
         this.commentsTemplate = new VanillaComments(templateId, postId, null, null, profilePicture, commentsUrl);
@@ -44,6 +52,20 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
         this.commentsUrl = commentsUrl;
 
         this.vanillaPopup = new VanillaPopup();
+
+        if(VanillaOpenPostTemplate.withSocketIo) {
+
+            this.authTokenForSocket = authTokenForSocket;
+
+            if(VanillaOpenPostTemplate.socketsManager == null) {
+
+                VanillaOpenPostTemplate.socketsManager = new Manager( VanillaOpenPostTemplate.socketIoUrl, {
+
+                    reconnectionDelayMax: VanillaOpenPostTemplate.reconnectionDelayMax,
+                    
+                });
+            }
+        }
 
         this.setAttribute('style', 'display: none !important;');
     }
@@ -201,11 +223,15 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
         this.commentsTemplate.commentsUrl = this.commentsUrl;
 
         this.smallGallery.currentIndex = 0;
+
+        if(VanillaOpenPostTemplate.withSocketIo) this.startSocket();
     }
 
     close() {
 
         this.setAttribute('style', 'display: none !important;');
+
+        if(VanillaOpenPostTemplate.withSocketIo) this.stopSocket();
     }
 
     countfilter(count, item) {
@@ -265,6 +291,63 @@ export default class VanillaOpenPostTemplate extends HTMLElement {
     contentSizeIsValid() {
 
         return this.content.length > VanillaOpenPostTemplate.maxContentLength ? false : true;
+    }
+
+    startSocket() {
+        
+
+        this.socket = VanillaOpenPostTemplate.socketsManager.socket ( 
+            VanillaOpenPostTemplate.socketIoNameSpace + "/" + this.postId,
+            {
+                auth: {
+                    token: this.authTokenForSocket
+                }
+            }
+        );
+
+        this.socket.on("connect_error", () => {
+
+            this.socket.auth.token = this.authTokenForSocket;
+            this.socket.connect();
+        });
+
+        this.socket.on("disconnect", (reason) => {
+
+            if(reason === "io server disconnect") {
+
+                this.socket.auth.token = this.authTokenForSocket;
+                this.socket.connect();
+            }
+        });
+
+        // handle all events from server side :
+
+        this.socket.on('comment', (comment) => {
+
+            this.commentsTemplate.push(comment);
+        });
+
+        this.socket.on('replay', (replay) => {
+
+            if(this.commentsTemplate.comments.has(replay.commentId)) {
+
+                this.commentsTemplate.comments.get(replay.commentId).push(replay);
+            }
+
+        });
+
+        this.socket.on('likes', (likes) => {
+            
+            this.likesCount = likes;
+        });
+        
+    }
+
+    stopSocket() {
+
+        this.socket.disconnect();
+
+        this.socket = null;
     }
 
     get content () { return this._content; }
